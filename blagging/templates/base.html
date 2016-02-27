@@ -1,0 +1,21 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  </head>
+  <body>
+  {% include 'nav.html' %}
+  {% block content %}
+  {% endblock %}
+  {% block scripts %}
+    <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='bower_components/what-input/what-input.js') }}"></script>
+    <script src="{{ url_for('static', filename='bower_components/foundation-sites/dist/foundation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% endblock %}
+  </body>
+</html>
