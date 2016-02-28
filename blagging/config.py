@@ -8,9 +8,11 @@ class Config:
     x9c\x031\xde'
     DEBUG = False
 
+
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'devblagging.db')
+
 
 class TestingConfig(Config):
     DEBUG = True
@@ -19,11 +21,12 @@ class TestingConfig(Config):
     DEBUG_TB_INTERCEPT_REDIRECTS = False #Remove Debug tool bar intercept redirects or you won't be able to test them
     TESTING = True #Bubble Execptions to test framework
 
+
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'blagging.db')
 
 
-config_by_name = dict(dev = DevelopmentConfig,
+config_by_name = dict(dev=DevelopmentConfig,
                       test=TestingConfig,
                       prod=ProductionConfig)
 

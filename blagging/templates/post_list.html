@@ -1,0 +1,14 @@
+
+{% for post in posts %}
+    <div class="blog-post">
+        <h3>{{ post.title }} <small>{{ post.date }}</small></h3>
+        <img class="thumbnail" src="http://placehold.it/850x350">
+        <p>{{ post.short_desc }}</p>
+        <div class="callout">
+        <ul class="menu simple">
+            <li><a href="#">Author: Mike Mikers</a></li>
+            <li><a href="#">Comments: 3</a></li>
+        </ul>
+        </div>
+    </div>
+{% endfor %}
