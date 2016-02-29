@@ -1,7 +1,12 @@
+{% extends 'base.html' %}
 
-{% for post in posts %}
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block content %}
     <div class="blog-post">
-        <h3><a href="{{ url_for('post', slug=post.display_title)}}">{{ post.title }}</a><small>{{ post.date }}</small></h3>
+        <h3>{{ post.title }} <small>{{ post.date }}</small></h3>
         <img class="thumbnail" src="http://placehold.it/850x350">
         <p>{{ post.short_desc }}</p>
         <div class="callout">
@@ -11,4 +16,4 @@
         </ul>
         </div>
     </div>
-{% endfor %}
+{% endblock %}

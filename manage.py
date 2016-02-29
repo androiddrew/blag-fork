@@ -1,7 +1,7 @@
 from flask_script import Manager, prompt_bool
 
 from blagging import app, create_app, db
-from blagging.models import Post
+from blagging.models import Post, Author
 
 #app = create_app('dev')
 manager = Manager(app)
@@ -21,8 +21,14 @@ def dropdb():
 
 @manager.command
 def testdata():
+    author = Author(display_name='Androiddrew', )
+    db.session.add(author)
+    db.session.commit()
+    post_title = 'This is a test post'
     post1 = Post(
-        title='This is a test post',
+        title=post_title,
+        author_id=author.id,
+        display_title=Post.slugify(post_title),
         short_desc='This is going to be the portion of the post that is displayed to the end user when they first \
         log into the app.',
         body="Lorem ipsum dolor sit amet, debet gubergren duo at, tamquam veritus verterem mea in, eu cibo iudico \
