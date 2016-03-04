@@ -2,6 +2,7 @@
 body {marging-top: 2rem;}
 
 $menu-background: #333;
+$menu-text-color: #fff;
 
 .title-bar {
   background: $menu-background;
@@ -21,7 +22,7 @@ $menu-background: #333;
 	  }
     
         a {
-          color: #fff;
+          color: $menu-text-color;
 		  
       }
     }
@@ -29,7 +30,7 @@ $menu-background: #333;
 }
 
 .menu-text {
-  color: #fff;
+  color: $menu-text-color;
   
   @media only screen and (max-width: 40em) {
     display: none !important;
@@ -132,4 +133,18 @@ $menu-background: #333;
 }
 .hvr-underline-from-right:hover:before, .hvr-underline-from-right:focus:before, .hvr-underline-from-right:active:before {
   left: 0;
+}
+
+.footer{
+  background-color: $menu-background;
+  padding: 2rem;
+  text-align: center;
+  p{
+    color: $menu-text-color;
+  }
+  .copywrite{
+    color: #8f9296;
+    font-size: 0.875rem;
+    //margin: 0 0 1rem 0;
+  }
 }
