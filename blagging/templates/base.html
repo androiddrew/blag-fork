@@ -11,6 +11,19 @@
   {% include 'nav.html' %}
   {% block content %}
   {% endblock %}
+  <footer class="footer">
+      <div class="row">
+          <div class="small-12 medium-6 large-6 columns">
+              <p>This is footer content left</p>
+          </div>
+          <div class="small-12 medium-6 large-6 columns">
+              <p>This is footer content right</p>
+          </div>
+      </div>
+      <div class="row">
+          <p class="copywrite">Copywrite Andrew Bednar 2016</p>
+      </div>
+  </footer>
   {% block scripts %}
     <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.js') }}"></script>
     <script src="{{ url_for('static', filename='bower_components/what-input/what-input.js') }}"></script>
