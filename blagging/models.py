@@ -10,11 +10,11 @@ tags = db.Table('post_tag',
                 db.Column('post_id', db.Integer, db.ForeignKey('post.id')))
 
 
-
 class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     display_name = db.Column(db.String(25), unique=True)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    comments = db.relationship('Comment', backref='user', lazy='dynamic') #Adding this allowed me to use author as a parameter to the Comment constructor
 
 
 class Post(db.Model):
@@ -28,6 +28,7 @@ class Post(db.Model):
     # secondary setups the link table between Tag and Post backref add a post attribute to the Tag
     _tags = db.relationship('Tag', secondary=tags, backref=db.backref('posts',
                                                                       lazy='dynamic'))
+    comments = db.relationship('Comment', backref='post', lazy='dynamic')
 
     @staticmethod
     def newest(num):
@@ -50,6 +51,14 @@ class Post(db.Model):
             self._tags = [Tag.get_or_create(name) for name in string.split(',')]
         else:
             self._tags = []
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
+    date = db.Column(db.DateTime, default=dt.utcnow)
+    text = db.Column(db.String, nullable=False)
 
 
 class Tag(db.Model):

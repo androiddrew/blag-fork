@@ -1,7 +1,7 @@
 from flask_script import Manager, prompt_bool
 
 from blagging import app, create_app, db
-from blagging.models import Post, Author, Tag
+from blagging.models import Post, Author, Tag, Comment
 
 #app = create_app('dev')
 manager = Manager(app)
@@ -30,11 +30,19 @@ def dropdb():
 @manager.command
 def insert_data():
     androiddrew = Author(display_name='Androiddrew', )
+    lauraurban = Author(display_name='UrbanDecayed', )
     db.session.add(androiddrew)
+    db.session.add(lauraurban)
+
+    def add_comment(text, post):
+        db.session.add(Comment(text=text, post=post, user=lauraurban))
 
     def add_post(title, short_desc, body, tags):
-        db.session.add(Post(title=title, display_title=Post.slugify(title), short_desc=short_desc,
-                            body=body, tags=tags, author=androiddrew))
+        post = Post(title=title, display_title=Post.slugify(title), short_desc=short_desc,
+                            body=body, tags=tags, author=androiddrew)
+        db.session.add(post)
+        add_comment('This is a default comment', post)
+
 
     for name in ['programming', 'flask', 'dirp', 'food']:
         db.session.add(Tag(name=name))
