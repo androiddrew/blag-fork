@@ -7,7 +7,7 @@
         <div class="callout">
         <ul class="menu simple">
             <li><a href="#">Author: {{ post.author.display_name }}</a></li>
-            <li><a href="#">Comments: 3</a></li>
+            <li><a href="#">Comments: {{ post.comments | length }}</a></li>
         </ul>
         </div>
     </div>

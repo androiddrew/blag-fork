@@ -28,7 +28,7 @@ class Post(db.Model):
     # secondary setups the link table between Tag and Post backref add a post attribute to the Tag
     _tags = db.relationship('Tag', secondary=tags, backref=db.backref('posts',
                                                                       lazy='dynamic'))
-    comments = db.relationship('Comment', backref='post', lazy='dynamic')
+    comments = db.relationship('Comment', backref='post') # leave lazy loading off
 
     @staticmethod
     def newest(num):
