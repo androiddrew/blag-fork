@@ -29,8 +29,8 @@ def dropdb():
 
 @manager.command
 def insert_data():
-    androiddrew = Author(display_name='Androiddrew', )
-    lauraurban = Author(display_name='UrbanDecayed', )
+    androiddrew = Author(display_name='Androiddrew', email='bednar.andrew@gmail.com')
+    lauraurban = Author(display_name='UrbanDecayed', email='kolady.laura@fake.com')
     db.session.add(androiddrew)
     db.session.add(lauraurban)
 
