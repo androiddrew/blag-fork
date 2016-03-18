@@ -8,21 +8,23 @@
     <div class="row medium-10 large-8 columns">
         <div class="blog-post">
             <h3>{{ post.title }} <small>{{ post.date }}</small></h3>
+            <div>
+                Posted By: <a href="#">{{ post.author.display_name }}</a>
+            </div>
+            <div>
+                Under: {% for t in post._tags %}<a href="#">{{ t.name }}</a> {% endfor %}
+            </div>
+            <hr>
             <img class="thumbnail" src="http://placehold.it/850x350">
             <p>{{ post.body }}</p>
-            <div class="callout">
-            <ul class="menu simple">
-                <li><a href="#">Author: {{ post.author.display_name }}</a></li>
-                <li><a href="#">Comments: {{ post.comments | length }}</a></li>
-            </ul>
-            </div>
+            <br>
             {% for comment in post.comments %}
                 <div class="comment callout">
                     <section class="top">
                         <h6 class="byline">
                             <a href="#">{{ comment.user.display_name }}</a>
                             <small>said
-                                <span class="data"> 4h ago</span>
+                                <span class="data">{{ comment.date }}</span>
                             </small>
                         </h6>
                     </section>
