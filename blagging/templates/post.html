@@ -16,6 +16,21 @@
                 <li><a href="#">Comments: {{ post.comments | length }}</a></li>
             </ul>
             </div>
+            {% for comment in post.comments %}
+                <div class="comment callout">
+                    <section class="top">
+                        <h6 class="byline">
+                            <a href="#">{{ comment.user.display_name }}</a>
+                            <small>said
+                                <span class="data"> 4h ago</span>
+                            </small>
+                        </h6>
+                    </section>
+                    <section class="content">
+                        <p>{{ comment.text }}</p>
+                    </section>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

@@ -18,7 +18,6 @@ class Author(db.Model):
     comments = db.relationship('Comment', backref='user', lazy='dynamic') #Adding this allowed me to use author as a parameter to the Comment constructor
 
 
-
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
