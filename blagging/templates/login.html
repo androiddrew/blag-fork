@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Blagging -- Login
+{% endblock %}
+
+
+{% block content%}
+    <div class="row" xmlns="http://www.w3.org/1999/html">
+        <div class="medium-6 medium-centered large-4 large-centered columns">
+            <form action="" method="post">
+                <div class="row column log-in-form">
+                    <h4 class="text-center">Please log in</h4>
+                    {{ form.username.label }}
+                    {{ form.username() }}
+                    {{ form.password.label }}
+                    {{ form.password() }}
+                    {{ form.remember_me.label }}
+                    {{ form.remember_me() }}
+                    <input type="submit" class="button expanded" value="Log In"></input>
+                <p class="text-center"><a href="#">Forgot your password?</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock%}

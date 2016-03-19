@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Blagging -- Posts tagged {{ tag }}
+{% endblock %}
+
+{% block content %}
+    <article>
+        <header>
+            <h1>Posts tagged {{ tag }}</h1>
+
+            {% if tag.posts.count() > 0 %}
+                {% with posts = tag.posts %}
+                    {% include "post_list.html" %}
+                {% endwith %}
+            {% else %}
+                There are no posts with this tag
+            {% endif %}
+        </header>
+    </article>
+{% endblock %}

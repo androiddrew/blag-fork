@@ -2,6 +2,8 @@ from datetime import datetime as dt
 import re
 from sqlalchemy import desc
 from sqlalchemy.orm import relationship, backref
+from flask_login import UserMixin
+from werkzeug.security import check_password_hash, generate_password_hash
 from . import db
 
 _punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
@@ -11,12 +13,32 @@ tags = db.Table('post_tag',
                 db.Column('post_id', db.Integer, db.ForeignKey('post.id')))
 
 
-class Author(db.Model):
+class Author(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), unique=True, index=True)
     display_name = db.Column(db.String(25), unique=True)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
-    comments = db.relationship('Comment', backref='user', lazy='dynamic') #Adding this allowed me to use author as a parameter to the Comment constructor
+    comments = db.relationship('Comment', backref='user', lazy='dynamic')
+    password_hash = db.Column(db.String)
+
+    @property
+    def password(self):
+        raise AttributeError('password: write-only field')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    @staticmethod
+    def get_by_username(username):
+        return Author.query.filter_by(display_name=username).first()
+
+    def __repr__(self):
+        return '<User: %r' % self.username
+
 
 
 class Post(db.Model):
