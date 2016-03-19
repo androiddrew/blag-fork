@@ -5,6 +5,32 @@
 {% endblock %}
 
 {% block content %}
+    <style>
+    .indented.comment {
+        padding-left: 15px;
+        border-left: 1px solid #ebebeb;
+    }
+
+    .push {
+        margin-bottom: 40px;
+    }
+
+    .post-tag{
+        color: #39739d;
+        display: inline-block;
+        margin: 2px 2px 2px 0;
+        background: #E1ECF4;
+        padding: .1rem .5rem;
+        border-radius: 2px;
+    }
+    .comment{
+        margin: 0 0 0 0;
+    }
+    .comments:last-child{
+        margin-bottom: 1rem;
+    }
+
+    </style>
     <div class="row medium-10 large-8 columns">
         <div class="blog-post">
             <h3>{{ post.title }} <small>{{ post.date }}</small></h3>
@@ -12,27 +38,23 @@
                 Posted By: <a href="#">{{ post.author.display_name }}</a>
             </div>
             <div>
-                Under: {% for t in post._tags %}<a href="#">{{ t.name }}</a> {% endfor %}
+                Under: {% for t in post._tags %}<a href="#" class="post-tag">{{ t.name }}</a> {% endfor %}
             </div>
             <hr>
             <img class="thumbnail" src="http://placehold.it/850x350">
             <p>{{ post.body }}</p>
             <br>
-            {% for comment in post.comments %}
-                <div class="comment callout">
-                    <section class="top">
-                        <h6 class="byline">
-                            <a href="#">{{ comment.user.display_name }}</a>
-                            <small>said
-                                <span class="data">{{ comment.date }}</span>
-                            </small>
-                        </h6>
-                    </section>
-                    <section class="content">
-                        <p>{{ comment.text }}</p>
-                    </section>
-                </div>
-            {% endfor %}
+            <div style="text-align: right">Comments: {{ post.comments | length }}</div>
+            <hr>
+            <div class="comments">
+            {% if post.comments %}
+                {% with comments = post.comments %}
+                    {% include 'comment_list.html' %}
+                {% endwith %}
+            {% else %}
+                <div>No Comments</div>
+            {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

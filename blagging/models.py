@@ -1,6 +1,7 @@
 from datetime import datetime as dt
 import re
 from sqlalchemy import desc
+from sqlalchemy.orm import relationship, backref
 from . import db
 
 _punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
@@ -60,6 +61,9 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
     date = db.Column(db.DateTime, default=dt.utcnow)
     text = db.Column(db.String, nullable=False)
+    # Sets up an Adjacency List Relationship for comments to be self referential
+    # parent_id = db.Column(db.Integer(), db.ForeignKey('comment.id'))
+    # children = relationship("Comment", backref=backref('parent', remote_side=[id]), lazy='joined', join_depth=2)
 
 
 class Tag(db.Model):

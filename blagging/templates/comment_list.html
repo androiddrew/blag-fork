@@ -1,0 +1,15 @@
+{% for comment in comments %}
+    <div class="comment callout">
+        <section class="top">
+            <h6 class="byline">
+                <a href="#">{{ comment.user.display_name }}</a>
+                <small>said
+                    <span class="data">{{ comment.date }}</span>
+                </small>
+            </h6>
+        </section>
+        <section class="content">
+            <p>{{ comment.text }}</p>
+        </section>
+    </div>
+{% endfor %}
