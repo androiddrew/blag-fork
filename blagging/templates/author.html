@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
 {% block title %}
-Blagging -- Posts tagged {{ tag }}
+Blagging -- {{ author.display_name }}
 {% endblock %}
 
 {% block content %}
     <div class="row medium-10 large-8 columns">
     <article>
         <header>
-            <h1>Posts tagged {{ tag }}</h1>
+            <h1>Posts authored by {{ author.display_name }}</h1>
 
-            {% if tag.posts.count() > 0 %}
-                {% with posts = tag.posts %}
+            {% if author.posts.count() > 0 %}
+                {% with posts = author.posts %}
                     {% include "post_list.html" %}
                 {% endwith %}
             {% else %}
-                There are no posts with this tag
+                <p>There are no posts have been authored by this user</p>
             {% endif %}
         </header>
     </article>

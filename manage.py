@@ -62,11 +62,11 @@ def test_data():
         db.session.add(Tag(name=name))
     db.session.commit()
 
-    add_post(title='First post', short_desc=test_short, body=test_body, tags='programming, flask',
+    add_post(title='First post', short_desc=test_short, body=test_body, tags='programming,flask',
              comments=random_comments())
-    add_post(title='Second post', short_desc=test_short, body=test_body, tags='dirp, flask',
+    add_post(title='Second post', short_desc=test_short, body=test_body, tags='dirp,flask',
              comments=random_comments())
-    add_post(title='Third post', short_desc=test_short, body=test_body, tags='programming, food',
+    add_post(title='Third post', short_desc=test_short, body=test_body, tags='programming,food',
              comments=random_comments())
     db.session.commit()
     print('Test data created')

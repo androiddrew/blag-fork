@@ -11,16 +11,7 @@
   </div>
   <div class="top-bar-right">
     <ul class="menu" data-responsive-menu="drilldown medium-dropdown">
-      <li>
-        <a href="#">Dropdown</a>
-        <ul class="submenu menu vertical" data-submenu>
-          <li class="hvr-underline-from-right"><a href="#">One</a></li>
-          <li class="hvr-underline-from-right"><a class="" href="#">Two</a></li>
-          <li class="hvr-underline-from-right"><a class="" href="#">Two</a></li>
-          <li class="hvr-underline-from-right"><a href="#">Three</a></li>
-        </ul>
-      </li>
-      <li class="hvr-underline-from-right"><a href="#">Two</a></li>
+      <li class="hvr-underline-from-right"><a href="{{ url_for('index') }}">Home</a></li>
       {% if current_user.is_authenticated %}
       <li class="hvr-underline-from-right"><a href="{{ url_for('logout') }}">Logout</a></li>
       {% else %}

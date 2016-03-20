@@ -45,6 +45,11 @@ def tag(name):
     tag = Tag.query.filter_by(name=name).first_or_404()
     return render_template('tag.html', tag=tag)
 
+@app.route('/author/<display_name>')
+def user(display_name):
+    user = Author.query.filter_by(display_name=display_name).first_or_404()
+    return render_template('author.html', author=user)
+
 #MAIN OTHER###########
 
 @app.errorhandler(404)
