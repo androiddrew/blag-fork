@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Blagging -- Add Post
+{% endblock %}
+
+
+{% block content%}
+    <div class="row">
+        <div class="medium-8 medium-centered large-6 large-centered columns">
+            <form action="" method="post">
+                <div class="row column">
+                    <h4 class="text-center">What's on your mind?</h4>
+                    {{ form.title.label }}
+                    {{ form.title() }}
+                    {{ form.short_desc.label }}
+                    {{ form.short_desc(rows='3') }}
+                    {{ form.body.label }}
+                    {{ form.body(rows='10') }}
+                    {{ form.tags.label }}
+                    {{ form.tags() }}
+                    <input type="submit" class="button" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock%}

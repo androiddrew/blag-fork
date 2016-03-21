@@ -45,6 +45,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
     date = db.Column(db.DateTime, default=dt.utcnow)
+    date_modified = db.Column(db.DateTime, default=dt.utcnow, onupdate=dt.utcnow)
     title = db.Column(db.String(80), nullable=False)
     display_title = db.Column(db.String(80), nullable=False, unique=True, index=True)
     short_desc = db.Column(db.String(200))
@@ -64,6 +65,7 @@ class Post(db.Model):
         """Generates an ASCII-only slug."""
         result = [word for word in _punct_re.split(text.lower())]
         return demlim.join(result)
+
 
     @property
     def tags(self):
