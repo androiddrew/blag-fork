@@ -1,7 +1,7 @@
 from flask import render_template, redirect, request, url_for, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from . import app, db, login_manager
-from .models import Post, Tag, Author
+from .models import Post, Tag, Author, tags as Post_Tag
 from .forms import LoginForm, PostForm
 
 
@@ -26,13 +26,14 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+
 #MAIN##############
 @app.route('/')
 @app.route('/index')
 def index():
     query = Post.query
     pagination = query.order_by(Post.date.desc()).paginate(page=1, per_page=app.config['POST_PER_PAGE'],
-                                                           error_out=False)
+                                                           error_out=True)
     return render_template('blog.html', pagination=pagination, authors=Author.query.all())
 
 
@@ -40,19 +41,39 @@ def index():
 def page(page_num):
     query = Post.query
     pagination = query.order_by(Post.date.desc()).paginate(page=page_num, per_page=app.config['POST_PER_PAGE'],
-                                                           error_out=False)
+                                                           error_out=True)
     return render_template('blog.html', pagination=pagination, authors=Author.query.all())
+
 
 @app.route('/post/<slug>')
 def post(slug):
     post = Post.query.filter_by(display_title=slug).first_or_404()
     return render_template('post.html', post=post)
 
-
+"""
 @app.route('/tag/<name>')
 def tag(name):
     tag = Tag.query.filter_by(name=name).first_or_404()
     return render_template('tag.html', tag=tag)
+"""
+@app.route('/tag/<name>')
+def tag(name):
+    tag = Tag.query.filter_by(name=name).first_or_404()
+    query = Post.query.join(Post_Tag).join(Tag).filter(Tag.id == tag.id)
+    pagination = query.order_by(Post.date.desc()).paginate(page=1, per_page=app.config['POST_PER_PAGE'],
+                                                           error_out=True)
+    return render_template('tag.html', pagination=pagination, tag=tag)
+
+
+
+@app.route('/tag/<name>/<int:page_num>')
+def tag_page(name, page_num):
+    tag = Tag.query.filter_by(name=name).first_or_404()
+    query = Post.query.join(Post_Tag).join(Tag).filter(Tag.id == tag.id)
+    pagination = query.order_by(Post.date.desc()).paginate(page=page_num, per_page=app.config['POST_PER_PAGE'],
+                                                           error_out=True)
+    return render_template('tag.html', pagination=pagination, tag=tag)
+
 
 
 @app.route('/author/<display_name>')

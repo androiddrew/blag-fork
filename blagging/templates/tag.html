@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from '_macros.html' import tag_render_pagination %}
 
 {% block title %}
 Blagging -- Posts tagged {{ tag }}
@@ -10,8 +11,8 @@ Blagging -- Posts tagged {{ tag }}
         <header>
             <h1>Posts tagged {{ tag }}</h1>
 
-            {% if tag.posts.count() > 0 %}
-                {% with posts = tag.posts %}
+            {% if pagination.total > 0 %}
+                {% with posts = pagination.items %}
                     {% include "post_list.html" %}
                 {% endwith %}
             {% else %}
@@ -19,5 +20,6 @@ Blagging -- Posts tagged {{ tag }}
             {% endif %}
         </header>
     </article>
+        {{ tag_render_pagination(pagination, 'tag_page', tag) }}
     </div>
 {% endblock %}
