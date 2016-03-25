@@ -27,12 +27,21 @@ def logout():
     return redirect(url_for('index'))
 
 #MAIN##############
-
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('blog.html', new_posts=Post.newest(5), authors=Author.query.all())
+    query = Post.query
+    pagination = query.order_by(Post.date.desc()).paginate(page=1, per_page=app.config['POST_PER_PAGE'],
+                                                           error_out=False)
+    return render_template('blog.html', pagination=pagination, authors=Author.query.all())
 
+
+@app.route('/index/page/<int:page_num>')
+def page(page_num):
+    query = Post.query
+    pagination = query.order_by(Post.date.desc()).paginate(page=page_num, per_page=app.config['POST_PER_PAGE'],
+                                                           error_out=False)
+    return render_template('blog.html', pagination=pagination, authors=Author.query.all())
 
 @app.route('/post/<slug>')
 def post(slug):

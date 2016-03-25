@@ -1,0 +1,60 @@
+{% macro pagination_widget(pagination, endpoint, fragment='') %}
+    <div class="row column">
+        <ul class="pagination" role="navigation" aria-label="Pagination">
+            {% if pagination.has_prev %}
+                <li><a href="{{ url_for('page', page_num=pagination.prev_num) }}" aria-label="Previous page">Previous</a></li>
+            {% else %}
+                <li class="disabled">Previous</li>
+            {% endif %}
+
+            {% for page in pagination.iter_pages() %}
+                {% if page == pagination.page %}
+                    <li class="current"><a href="{{url_for(endpoint, page_num=page)}}" aria-label="Page {{ page }}">{{ page }}</a></li>
+                {% else %}
+                    <li>
+                        <a href="{{ url_for(endpoint, page_num=page) }}" aria-label="Page {{ page }}">{{ page }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if pagination.has_next %}
+                <li><a href="{{ url_for('page', page_num=pagination.next_num) }}" aria-label="Next page">Next</a></li>
+            {% else %}
+                <li class="disabled">Next</li>
+            {% endif %}
+        </ul>
+    </div>
+
+                <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
+            <li><a href="#" aria-label="Page 2">2</a></li>
+            <li><a href="#" aria-label="Page 3">3</a></li>
+            <li><a href="#" aria-label="Page 4">4</a></li>
+            <li class="ellipsis"></li>
+            <li><a href="#" aria-label="Page 12">12</a></li>
+            <li><a href="#" aria-label="Page 13">13</a></li>
+{% endmacro %}
+
+{% macro render_pagination(pagination, endpoint) %}
+    <div class="row column">
+        <ul class="pagination" role="navigation" aria-label="Pagination">
+            {% if pagination.has_prev %}
+                <li><a href="{{ url_for('page', page_num=pagination.prev_num) }}" aria-label="Previous page">Previous</a></li>
+            {% else %}
+                <li class="disabled">Previous</li>
+            {% endif %}
+            {% for page in pagination.iter_pages() %}
+                {% if page %}
+                    {% if page == pagination.page %}
+                        <li class="current"><span class="show-for-sr">You're on page</span>{{ page }}</li>
+                    {% else %}
+                        <li><a href="{{ url_for(endpoint, page_num=page) }}" aria-label="Page {{ page }}">{{ page }}</a></li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if pagination.has_next %}
+                <li><a href="{{ url_for('page', page_num=pagination.next_num) }}" aria-label="Next page">Next</a></li>
+            {% else %}
+                <li class="disabled">Next</li>
+            {% endif %}
+        </ul>
+    </div>
+{% endmacro %}
