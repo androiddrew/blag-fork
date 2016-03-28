@@ -63,7 +63,7 @@
     <div class="row column">
         <ul class="pagination" role="navigation" aria-label="Pagination">
             {% if pagination.has_prev %}
-                <li><a href="{{ url_for('page', name=tag.name, page_num=pagination.prev_num) }}" aria-label="Previous page">Previous</a></li>
+                <li><a href="{{ url_for(endpoint, name=tag.name, page_num=pagination.prev_num) }}" aria-label="Previous page">Previous</a></li>
             {% else %}
                 <li class="disabled">Previous</li>
             {% endif %}

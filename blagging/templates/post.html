@@ -42,9 +42,9 @@
             </div>
             <hr>
             <img class="thumbnail" src="http://placehold.it/850x350">
-            <p>{{ post.body }}</p>
+            <p>{{ post.body | safe }}</p>
             <br>
-            <div style="text-align: right">Comments: {{ post.comments | length }}</div>
+            <div id="comments" style="text-align: right">Comments: {{ post.comments | length }}</div>
             <hr>
             <div class="comments">
             {% if post.comments %}
