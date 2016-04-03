@@ -48,6 +48,7 @@ class Post(db.Model):
     date_modified = db.Column(db.DateTime, default=dt.utcnow, onupdate=dt.utcnow)
     title = db.Column(db.String(80), nullable=False)
     display_title = db.Column(db.String(80), nullable=False, unique=True, index=True)
+    published = db.Column(db.Boolean, nullable=False, default=True)
     short_desc = db.Column(db.String(200))
     body = db.Column(db.String)
     # secondary setups the link table between Tag and Post backref add a post attribute to the Tag

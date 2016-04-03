@@ -68,6 +68,10 @@ def test_data():
              comments=random_comments())
     add_post(title='Third post', short_desc=test_short, body=test_body, tags='programming,food',
              comments=random_comments())
+    add_post(title='Fourth post', short_desc=test_short, body=test_body, tags='programming,food',
+             comments=random_comments())
+    add_post(title='Inactive', short_desc=test_short, body=test_body, tags='dirp,food',
+             comments=random_comments())
     db.session.commit()
     print('Test data created')
 

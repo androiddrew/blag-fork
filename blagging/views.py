@@ -31,7 +31,7 @@ def logout():
 @app.route('/')
 @app.route('/index')
 def index():
-    query = Post.query
+    query = Post.query.filter(Post.published==True)
     pagination = query.order_by(Post.date.desc()).paginate(page=1, per_page=app.config['POST_PER_PAGE'],
                                                            error_out=True)
     return render_template('blog.html', pagination=pagination, authors=Author.query.all())
@@ -39,7 +39,7 @@ def index():
 
 @app.route('/index/page/<int:page_num>')
 def page(page_num):
-    query = Post.query
+    query = Post.query.filter(Post.published==True)
     pagination = query.order_by(Post.date.desc()).paginate(page=page_num, per_page=app.config['POST_PER_PAGE'],
                                                            error_out=True)
     return render_template('blog.html', pagination=pagination, authors=Author.query.all())
@@ -47,7 +47,7 @@ def page(page_num):
 
 @app.route('/post/<slug>')
 def post(slug):
-    post = Post.query.filter_by(display_title=slug).first_or_404()
+    post = Post.query.filter_by(display_title=slug).filter(Post.published==True).first_or_404()
     return render_template('post.html', post=post)
 
 """
@@ -59,8 +59,8 @@ def tag(name):
 @app.route('/tag/<name>')
 def tag(name):
     tag = Tag.query.filter_by(name=name).first_or_404()
-    query = Post.query.join(Post_Tag).join(Tag).filter(Tag.id == tag.id)
-    pagination = query.order_by(Post.date.desc()).paginate(page=1, per_page=app.config['POST_PER_PAGE'],
+    query = Post.query.join(Post_Tag).join(Tag).filter(Tag.id == tag.id).filter(Post.published==True)
+    pagination = query.filter(Post.published==True).order_by(Post.date.desc()).paginate(page=1, per_page=app.config['POST_PER_PAGE'],
                                                            error_out=True)
     return render_template('tag.html', pagination=pagination, tag=tag)
 
@@ -69,7 +69,7 @@ def tag(name):
 @app.route('/tag/<name>/<int:page_num>')
 def tag_page(name, page_num):
     tag = Tag.query.filter_by(name=name).first_or_404()
-    query = Post.query.join(Post_Tag).join(Tag).filter(Tag.id == tag.id)
+    query = Post.query.join(Post_Tag).join(Tag).filter(Tag.id == tag.id).filter(Post.published==True)
     pagination = query.order_by(Post.date.desc()).paginate(page=page_num, per_page=app.config['POST_PER_PAGE'],
                                                            error_out=True)
     return render_template('tag.html', pagination=pagination, tag=tag)
@@ -91,8 +91,9 @@ def add():
         short_desc = form.short_desc.data
         body = form.body.data
         tags = form.tags.data
+        published = int(form.published.data)
         post = Post(author=current_user, title=title, short_desc=short_desc, body=body, tags=tags,
-                    display_title=Post.slugify(title))
+                    display_title=Post.slugify(title), published=published)
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('index'))
@@ -109,7 +110,7 @@ def edit_post(post_id):
     if form.validate_on_submit():
         form.populate_obj(post)
         db.session.commit()
-        return redirect(url_for('post', slug=post.display_title))
+        return redirect(url_for('index'))
     return render_template('post_form.html', form=form)
 
 #MAIN OTHER###########

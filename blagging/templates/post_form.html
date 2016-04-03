@@ -11,6 +11,14 @@ Blagging -- Add Post
             <form action="" method="post">
                 <div class="row column">
                     <h4 class="text-center">What's on your mind?</h4>
+                    <div class="row">
+                        <div class="large-8 medium-8 columns"> {{ form.published.label(class='text-right') }}</div>
+                        <div class="large-4 medium-4 columns">
+                        {{ form.published() }}
+                        </div>
+                    </div>
+                    <fieldset class="fieldset">
+                        <legend>Post Content</legend>
                     {{ form.title.label }}
                     {{ form.title() }}
                     {{ form.short_desc.label }}
@@ -19,6 +27,7 @@ Blagging -- Add Post
                     {{ form.body(rows='10') }}
                     {{ form.tags.label }}
                     {{ form.tags() }}
+                    </fieldset>
                     <input type="submit" class="button" value="Submit">
                 </div>
             </form>
