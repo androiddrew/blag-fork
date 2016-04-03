@@ -148,3 +148,17 @@ $menu-text-color: #fff;
     //margin: 0 0 1rem 0;
   }
 }
+
+.no-js {
+  @include breakpoint(small only) {
+    .top-bar {
+      display: none;
+    }
+  }
+
+  @include breakpoint(medium) {
+    .title-bar {
+      display: none;
+    }
+  }
+}

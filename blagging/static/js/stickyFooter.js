@@ -13,7 +13,7 @@
  * Modification for Foundation 5 auto height issues
  * Modification for new DOM change event listener
  * Modification for old IE mutation events, since not supported uses polling
- * 
+ *
  * Feb 2, 2016
  * Modification for HTML multiple <footer> tag syntax, SF should only grabbing the last <footer> on the page
  */
@@ -49,10 +49,10 @@ if (MutationObserver) {
 	observer = new MutationObserver(mutationObjectCallback);
 }
 
-function mutationObjectCallback(mutationRecordsList) {	
+function mutationObjectCallback(mutationRecordsList) {
 	stickyFooter();
 };
-	 
+
 
 //check for resize event
 window.onresize = function() {
@@ -64,15 +64,15 @@ function getCSS(element, property) {
 
   var elem = document.getElementsByTagName(element)[0];
   var css = null;
-  
+
   if (elem.currentStyle) {
     css = elem.currentStyle[property];
-  
+
   } else if (window.getComputedStyle) {
 	css = document.defaultView.getComputedStyle(elem, null).
 	getPropertyValue(property);
   }
-  
+
   return css;
 
 }
@@ -82,32 +82,32 @@ function stickyFooter() {
 		observer.disconnect();
 	}
 	document.body.setAttribute("style","height:auto");
-	
+
 	//only get the last footer
 	var footer = document.getElementsByTagName("footer")[document.getElementsByTagName("footer").length-1];
-			
+
 	if (footer.getAttribute("style") != null) {
 		footer.removeAttribute("style");
 	}
-	
+
 	if (window.innerHeight != document.body.offsetHeight) {
 		var offset = window.innerHeight - document.body.offsetHeight;
 		var current = getCSS("footer", "margin-top");
-		
+
 		if (isNaN(current) == true) {
 			footer.setAttribute("style","margin-top:0px;");
 			current = 0;
 		} else {
 			current = parseInt(current);
 		}
-						
-		if (current+offset > parseInt(getCSS("footer", "margin-top"))) {			
+
+		if (current+offset > parseInt(getCSS("footer", "margin-top"))) {
 			footer.setAttribute("style","margin-top:"+(current+offset)+"px;");
 		}
 	}
-	
+
 	document.body.setAttribute("style","height:100%");
-	
+
 	//reconnect
 	if (MutationObserver) {
 		observer.observe(target, config);
