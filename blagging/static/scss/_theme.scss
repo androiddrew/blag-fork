@@ -161,4 +161,31 @@ $menu-text-color: #fff;
       display: none;
     }
   }
+
+}
+
+.indented.comment {
+        padding-left: 15px;
+        border-left: 1px solid #ebebeb;
+}
+
+.push {
+        margin-bottom: 40px;
+}
+
+.post-tag{
+        color: #39739d;
+        display: inline-block;
+        margin: 2px 2px 2px 0;
+        background: #E1ECF4;
+        padding: .1rem .5rem;
+        border-radius: 2px;
+}
+
+.comment{
+        margin: 0 0 0 0;
+}
+
+.comments:last-child{
+        margin-bottom: 1rem;
 }

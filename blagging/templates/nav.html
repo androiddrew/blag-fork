@@ -13,7 +13,13 @@
     <ul class="menu" data-responsive-menu="drilldown medium-dropdown">
       <li class="hvr-underline-from-right"><a href="{{ url_for('index') }}">Home</a></li>
       {% if current_user.is_authenticated %}
-      <li class="hvr-underline-from-right"><a href="{{ url_for('add') }}">Add</a></li>
+      <li class="has-submenu">
+        <a href="#">My Console</a>
+        <ul class="submenu menu vertical" data-submenu>
+            <li class="hvr-underline-from-right"><a href="{{ url_for('add') }}">Add Post</a></li>
+            <li class="hvr-underline-from-right"><a href="#">Edit Post</a></li>
+        </ul>
+      </li>
       <li class="hvr-underline-from-right"><a href="{{ url_for('logout') }}">Logout</a></li>
       {% else %}
       <li class="hvr-underline-from-right"><a href="{{ url_for('login') }}">Login</a></li>

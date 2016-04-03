@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Blag | Edit Posts{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="medium-8 medium-centered large-8 large-centered columns">
+            <h1 class="text-center">Edit Posts</h1>
+            <hr/>
+            {% for post in posts %}
+                <div class="callout">
+                    <p>Title: {{post.title}}</p>
+                    <p>Created Dated: {{ post.date }}</p>
+                    <p>Last Modified: {{ post.date_modified }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

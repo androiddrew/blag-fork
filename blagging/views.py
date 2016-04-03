@@ -99,6 +99,11 @@ def add():
         return redirect(url_for('index'))
     return render_template('post_form.html', form=form)
 
+@app.route('/edit')
+@login_required
+def edit():
+    posts = Post.query.filter(Post.author_id==current_user.id).all()
+    return render_template('edit_list.html', posts=posts)
 
 @app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
