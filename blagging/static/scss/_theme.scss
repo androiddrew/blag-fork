@@ -182,10 +182,20 @@ $menu-text-color: #fff;
         border-radius: 2px;
 }
 
-.comment{
-        margin: 0 0 0 0;
+/* Used to stack callouts on top of each other */
+.callout-stack{
+  .callout{
+    margin: 0 0 0 0;
+
+    .row{
+      margin-bottom: 0;
+    }
+    .colums{
+      margin-bottom: 0;
+    }
+  }
+  &:last-child{
+    margin-bottom: 1rem;
+  }
 }
 
-.comments:last-child{
-        margin-bottom: 1rem;
-}

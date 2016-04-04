@@ -12,7 +12,7 @@
                 Posted By: <a href="{{ url_for('user', display_name=post.author.display_name) }}">{{ post.author.display_name }}</a>
             </div>
             <div>
-                Under: {% for t in post._tags %}<a href="{{ url_for('tag', name=t.name) }}" class="post-tag">{{ t.name }}</a> {% endfor %}
+                Tags: {% for t in post._tags %}<a href="{{ url_for('tag', name=t.name) }}" class="post-tag">{{ t.name }}</a> {% endfor %}
             </div>
             <hr>
             <img class="thumbnail" src="http://placehold.it/850x350">
@@ -20,7 +20,7 @@
             <br>
             <div id="comments" class="float-right">Comments: {{ post.comments | length }}</div>
             <hr>
-            <div class="comments">
+            <div class="callout-stack">
             {% if post.comments %}
                 {% with comments = post.comments %}
                     {% include 'comment_list.html' %}
