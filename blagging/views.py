@@ -33,15 +33,8 @@ def logout():
 
 @app.route('/')
 @app.route('/index')
-def index():
-    query = Post.query.filter(Post.published==True)
-    pagination = query.order_by(Post.date.desc()).paginate(page=1, per_page=app.config['POST_PER_PAGE'],
-                                                           error_out=True)
-    return render_template('blog.html', pagination=pagination, authors=Author.query.all())
-
-
-@app.route('/index/page/<int:page_num>')
-def page(page_num=1):
+@app.route('/index/<int:page_num>')
+def index(page_num=1):
     query = Post.query.filter(Post.published==True)
     pagination = query.order_by(Post.date.desc()).paginate(page=page_num, per_page=app.config['POST_PER_PAGE'],
                                                            error_out=True)
