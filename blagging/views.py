@@ -15,7 +15,6 @@ def load_user(userid):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        # login and validate the user:
         user = Author.get_by_username(form.username.data)
         if user is not None and user.check_password(form.password.data):
             login_user(user, form.remember_me.data)
@@ -32,8 +31,8 @@ def logout():
 #MAIN##############
 
 @app.route('/')
-@app.route('/index')
-@app.route('/index/<int:page_num>')
+@app.route('/blog')
+@app.route('/blog/page/<int:page_num>')
 def index(page_num=1):
     query = Post.query.filter(Post.published==True)
     pagination = query.order_by(Post.date.desc()).paginate(page=page_num, per_page=app.config['POST_PER_PAGE'],
@@ -116,7 +115,7 @@ def page_not_found(e):
 
 @app.errorhandler(500)
 def server_error(e):
-    return render_template('500.html'), 500 # Debug needs to be turned off to hit a 500
+    return render_template('500.html'), 500
 
 
 @app.context_processor
