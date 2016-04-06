@@ -10,6 +10,7 @@ from .forms import LoginForm, PostForm
 def load_user(userid):
     return Author.query.get(int(userid))
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -21,6 +22,7 @@ def login():
             return redirect(request.args.get('next') or url_for('index'))
     return render_template('login.html', form=form)
 
+
 @app.route('/logout')
 def logout():
     logout_user()
@@ -28,6 +30,7 @@ def logout():
 
 
 #MAIN##############
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -38,7 +41,7 @@ def index():
 
 
 @app.route('/index/page/<int:page_num>')
-def page(page_num):
+def page(page_num=1):
     query = Post.query.filter(Post.published==True)
     pagination = query.order_by(Post.date.desc()).paginate(page=page_num, per_page=app.config['POST_PER_PAGE'],
                                                            error_out=True)
@@ -50,30 +53,15 @@ def post(slug):
     post = Post.query.filter_by(display_title=slug).filter(Post.published==True).first_or_404()
     return render_template('post.html', post=post)
 
-"""
+
 @app.route('/tag/<name>')
-def tag(name):
-    tag = Tag.query.filter_by(name=name).first_or_404()
-    return render_template('tag.html', tag=tag)
-"""
-@app.route('/tag/<name>')
-def tag(name):
-    tag = Tag.query.filter_by(name=name).first_or_404()
-    query = Post.query.join(Post_Tag).join(Tag).filter(Tag.id == tag.id).filter(Post.published==True)
-    pagination = query.filter(Post.published==True).order_by(Post.date.desc()).paginate(page=1, per_page=app.config['POST_PER_PAGE'],
-                                                           error_out=True)
-    return render_template('tag.html', pagination=pagination, tag=tag)
-
-
-
 @app.route('/tag/<name>/<int:page_num>')
-def tag_page(name, page_num):
+def tag(name, page_num=1):
     tag = Tag.query.filter_by(name=name).first_or_404()
     query = Post.query.join(Post_Tag).join(Tag).filter(Tag.id == tag.id).filter(Post.published==True)
-    pagination = query.order_by(Post.date.desc()).paginate(page=page_num, per_page=app.config['POST_PER_PAGE'],
+    pagination = query.filter(Post.published==True).order_by(Post.date.desc()).paginate(page=page_num, per_page=app.config['POST_PER_PAGE'],
                                                            error_out=True)
     return render_template('tag.html', pagination=pagination, tag=tag)
-
 
 
 @app.route('/author/<display_name>')
@@ -99,11 +87,13 @@ def add():
         return redirect(url_for('index'))
     return render_template('post_form.html', form=form)
 
+
 @app.route('/edit')
 @login_required
 def edit():
     posts = Post.query.filter(Post.author_id==current_user.id).all()
     return render_template('edit_list.html', posts=posts)
+
 
 @app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
@@ -120,6 +110,7 @@ def edit_post(post_id):
 
 #MAIN OTHER###########
 
+
 @app.errorhandler(403)
 def page_not_found(e):
     return render_template('403.html'), 403
@@ -133,6 +124,7 @@ def page_not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500 # Debug needs to be turned off to hit a 500
+
 
 @app.context_processor
 def inject_tags():
