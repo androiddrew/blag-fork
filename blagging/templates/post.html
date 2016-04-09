@@ -15,8 +15,7 @@
                 Tags: {% for t in post._tags %}<a href="{{ url_for('tag', name=t.name) }}" class="post-tag">{{ t.name }}</a> {% endfor %}
             </div>
             <hr>
-            <img class="thumbnail" src="http://placehold.it/850x350">
-            <p>{{ post.body | safe }}</p>
+            <p>{{ post.body | markdown }}</p>
             <br>
             <div id="comments" class="float-right">Comments: {{ post.comments | length }}</div>
             <hr>

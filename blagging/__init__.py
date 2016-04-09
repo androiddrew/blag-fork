@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask.ext.markdown import Markdown
 from .config import config_by_name
 
 db = SQLAlchemy()
@@ -16,7 +17,7 @@ def create_app(config_name):
     app.config.from_object(config_by_name[config_name])
     db.init_app(app)
     login_manager.init_app(app)
-
+    Markdown(app)
     return app
 
 app = create_app('dev')
