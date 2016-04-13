@@ -22,6 +22,14 @@ class PostForm(Form):
     body = TextAreaField("What's on your mind?", validators=[DataRequired()])
     tags = StringField('Tags')
 
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+        if 'post_id' in kwargs:
+            self.post_id = kwargs['post_id']
+        else:
+            self.post_id = None
+
     def validate_title(self, title_field):
-        if Post.query.filter_by(title=title_field.data).first():
+        post = Post.query.filter_by(title=title_field.data).first()
+        if post and post.id != self.post_id:
             raise ValidationError('This title has already been used.')

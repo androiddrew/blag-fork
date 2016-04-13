@@ -93,7 +93,7 @@ def edit_post(post_id):
     post = Post.query.get_or_404(post_id)
     if current_user != post.author:
         abort(403)
-    form = PostForm(obj=post)
+    form = PostForm(obj=post, post_id=post.id)
     if form.validate_on_submit():
         form.populate_obj(post)
         db.session.commit()
