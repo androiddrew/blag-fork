@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from '_macros.html' import render_field %}
 
 {% block title %}
 Blagging -- Add Post
@@ -9,7 +10,14 @@ Blagging -- Add Post
     <div class="row">
         <div class="medium-8 medium-centered large-6 large-centered columns">
             <form action="" method="post">
+                {{form.hidden_tag()}} <!-- prevents CSRF attack -->
                 <div class="row column">
+                    <div class="alert callout" data-closable style="display:{% if not form.errors %}none{% else %}block{% endif %};margin-top:1rem;">
+                        <p><i class="fi-alert"></i> There are some errors in your form.</p>
+                        <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <h4 class="text-center">What's on your mind?</h4>
                     <div class="row">
                         <div class="large-8 medium-8 columns"> {{ form.published.label(class='text-right') }}</div>
@@ -19,14 +27,10 @@ Blagging -- Add Post
                     </div>
                     <fieldset class="fieldset">
                         <legend>Post Content</legend>
-                    {{ form.title.label }}
-                    {{ form.title() }}
-                    {{ form.short_desc.label }}
-                    {{ form.short_desc(rows='3') }}
-                    {{ form.body.label }}
-                    {{ form.body(rows='10') }}
-                    {{ form.tags.label }}
-                    {{ form.tags() }}
+                    {{ render_field(form.title) }}
+                    {{ render_field(form.short_desc,rows='3') }}
+                    {{ render_field(form.body, rows='10') }}
+                    {{ render_field(form.tags) }}
                     </fieldset>
                     <input type="submit" class="button" value="Submit">
                 </div>
