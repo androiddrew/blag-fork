@@ -42,7 +42,7 @@ def index(page_num=1):
 
 @app.route('/post/<slug>')
 def post(slug):
-    post = Post.query.filter_by(display_title=slug).filter(Post.published==True).first_or_404()
+    post = Post.query.filter_by(_display_title=slug).filter(Post.published==True).first_or_404()
     return render_template('post.html', post=post)
 
 
@@ -72,8 +72,8 @@ def add():
         body = form.body.data
         tags = form.tags.data
         published = int(form.published.data)
-        post = Post(author=current_user, title=title, short_desc=short_desc, body=body, tags=tags,
-                    display_title=Post.slugify(title), published=published)
+        post = Post(author=current_user, title=title, display_title=title, short_desc=short_desc, body=body, tags=tags,
+                     published=published)
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('index'))
@@ -101,8 +101,6 @@ def edit_post(post_id):
     return render_template('post_form.html', form=form)
 
 #MAIN OTHER###########
-
-
 @app.errorhandler(403)
 def page_not_found(e):
     return render_template('403.html'), 403

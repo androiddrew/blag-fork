@@ -37,7 +37,7 @@ class Author(db.Model, UserMixin):
         return Author.query.filter_by(display_name=username).first()
 
     def __repr__(self):
-        return '<User: %r' % self.username
+        return '<User: %r >' % self.display_name
 
 
 
@@ -47,7 +47,7 @@ class Post(db.Model):
     date = db.Column(db.DateTime, default=dt.utcnow)
     date_modified = db.Column(db.DateTime, default=dt.utcnow, onupdate=dt.utcnow)
     title = db.Column(db.String(80), nullable=False)
-    display_title = db.Column(db.String(80), nullable=False, unique=True, index=True)
+    _display_title = db.Column(db.String(80), nullable=False, unique=True, index=True)
     published = db.Column(db.Boolean, nullable=False, default=True)
     short_desc = db.Column(db.String(200))
     body = db.Column(db.String)
@@ -61,12 +61,15 @@ class Post(db.Model):
         """Returns a list of posts"""
         return Post.query.order_by(desc(Post.date)).limit(num)
 
-    @staticmethod
-    def slugify(text, demlim='-'):
+    @property
+    def display_title(self):
+        return self._display_title
+
+    @display_title.setter
+    def display_title(self, text, demlim='-'):
         """Generates an ASCII-only slug."""
         result = [word for word in _punct_re.split(text.lower())]
-        return demlim.join(result)
-
+        self._display_title = demlim.join(result)
 
     @property
     def tags(self):

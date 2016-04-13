@@ -52,7 +52,7 @@ def test_data():
         db.session.add(Comment(text=text, post=post, user=lauraurban))
 
     def add_post(title, short_desc, body, tags, comments=None):
-        post = Post(title=title, display_title=Post.slugify(title), short_desc=short_desc, body=body, tags=tags,
+        post = Post(title=title, display_title=title, short_desc=short_desc, body=body, tags=tags,
                     author=androiddrew)
         db.session.add(post)
         for e in comments:
