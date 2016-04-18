@@ -1,4 +1,5 @@
-from flask import render_template, redirect, request, url_for, abort
+from datetime import datetime as dt
+from flask import render_template, redirect, request, url_for, abort, render_template_string
 from flask_login import login_user, logout_user, login_required, current_user
 from . import app, db, login_manager
 from .models import Post, Tag, Author, tags as Post_Tag
@@ -83,7 +84,7 @@ def add():
 @app.route('/edit')
 @login_required
 def edit():
-    posts = Post.query.filter(Post.author_id==current_user.id).all()
+    posts = Post.query.filter(Post.author_id == current_user.id).all()
     return render_template('edit_list.html', posts=posts)
 
 
@@ -99,6 +100,19 @@ def edit_post(post_id):
         db.session.commit()
         return redirect(url_for('index'))
     return render_template('post_form.html', form=form)
+
+
+
+@app.route('/preview', methods=['GET', 'POST'])
+#@login_required
+def preview_post():
+    result = request.get_json(force=True)
+    form_data = dict()
+    form_data['date'] = dt.utcnow()
+    form_data['author'] = 'Name'
+    for field in result:
+        form_data[field['name']] = field['value']
+    return render_template('post_preview.html', post=form_data)
 
 #MAIN OTHER###########
 @app.errorhandler(403)

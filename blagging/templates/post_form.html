@@ -9,7 +9,7 @@ Blagging -- Add Post
 {% block content%}
     <div class="row">
         <div class="medium-8 medium-centered large-6 large-centered columns">
-            <form action="" method="post">
+            <form id="postForm" action="" method="post">
                 {{form.hidden_tag()}} <!-- prevents CSRF attack -->
                 <div class="row column">
                     <div class="alert callout" data-closable style="display:{% if not form.errors %}none{% else %}block{% endif %};margin-top:1rem;">
@@ -33,8 +33,39 @@ Blagging -- Add Post
                     {{ render_field(form.tags) }}
                     </fieldset>
                     <input type="submit" class="button" value="Submit">
+                    <a id="preview" data-toggle="examplePreview" class="button secondary">Preview</a>
                 </div>
             </form>
         </div>
     </div>
+    <div class="full reveal" id="examplePreview" data-reveal>
+        <div id="previewContainer">
+
+        </div>
+          <button class="close-button" data-close aria-label="Close reveal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+    </div>
 {% endblock%}
+{% block scripts %}
+{{ super() }}
+<script>
+    $(document).ready(function(){
+        $('#preview').click(function(){
+           //var $form = $('#postForm');
+            $.ajax({
+                type: 'POST',
+                url: '/preview',
+                contentType: "application/json",
+                data: JSON.stringify($('#postForm').serializeArray()),
+                success: function(response) {
+                    $('#previewContainer').html(response);
+                },
+                fail: function(){
+                    $('#previewContainer').html('<p>Preview failed</p>');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
