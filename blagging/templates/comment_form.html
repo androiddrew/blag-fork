@@ -1,0 +1,20 @@
+{% from '_macros.html' import render_field %}
+<form id="commentForm" action="" method="post">
+                {{form.hidden_tag()}} <!-- prevents CSRF attack -->
+                <div class="row column">
+                    <div class="alert callout" data-closable style="display:{% if not form.errors %}none{% else %}block{% endif %};margin-top:1rem;">
+                        <p><i class="fi-alert"></i> There are some errors in your form.</p>
+                        <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                {% if current_user.is_authenticated %}
+                {{ render_field(form.text) }}
+                <input type="submit" class="button" value="Post Comment">
+                {% else %}
+                {{ render_field(form.text, disabled=True) }}
+                <input type="submit" class="button disabled" value="Post Comment">
+                <a class="button" href="{{auth_url('/login', request.url + '#commentForm')}}">Login</a>
+                {% endif %}
+</form>

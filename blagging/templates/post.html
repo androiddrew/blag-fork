@@ -28,6 +28,9 @@
                 <div>No Comments</div>
             {% endif %}
             </div>
+            {% with comment_form = form %}
+                {% include 'comment_form.html' %}
+            {% endwith %}
         </div>
     </div>
 {% endblock %}

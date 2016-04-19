@@ -1,9 +1,9 @@
 from datetime import datetime as dt
 from flask import render_template, redirect, request, url_for, abort, render_template_string
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required, current_user, login_url
 from . import app, db, login_manager
-from .models import Post, Tag, Author, tags as Post_Tag
-from .forms import LoginForm, PostForm
+from .models import Post, Tag, Author, tags as Post_Tag, Comment
+from .forms import LoginForm, PostForm, CommentForm
 
 
 #Auth#################
@@ -41,10 +41,18 @@ def index(page_num=1):
     return render_template('blog.html', pagination=pagination, authors=Author.query.all())
 
 
-@app.route('/post/<slug>')
+@app.route('/post/<slug>', methods=['GET', 'POST'])
 def post(slug):
     post = Post.query.filter_by(_display_title=slug).filter(Post.published==True).first_or_404()
-    return render_template('post.html', post=post)
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment_text = form.text.data
+        user = current_user._get_current_object()
+        comment = Comment(user=user, post=post, text=comment_text)
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(url_for('post', slug=post.display_title))
+    return render_template('post.html', post=post, form=form)
 
 
 @app.route('/tag/<name>')
@@ -135,3 +143,7 @@ def server_error(e):
 def inject_tags():
     """context_processor similar to the app_context_processor for blueprints"""
     return dict(all_tags=Tag.all)
+
+@app.context_processor
+def inject_auth_url():
+    return dict(auth_url=login_url)
