@@ -104,14 +104,15 @@ def edit_post(post_id):
 
 
 @app.route('/preview', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def preview_post():
     result = request.get_json(force=True)
     form_data = dict()
     form_data['date'] = dt.utcnow()
-    form_data['author'] = 'Name'
+    form_data['author'] = current_user
     for field in result:
         form_data[field['name']] = field['value']
+    form_data['tags']= form_data.get('tags').split(',')
     return render_template('post_preview.html', post=form_data)
 
 #MAIN OTHER###########

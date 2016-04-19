@@ -3,13 +3,13 @@
         <div class="blog-post">
             <h3>{{ post.title }} <small>{{ post.date }}</small></h3>
             <div>
-                Posted By: <a href="#">{{ post.author}}</a>
+                Posted By: <a href="#">{{ post.author.display_name}}</a>
             </div>
             <div>
-                Tags: {% for t in post._tags %}<a href="#" class="post-tag">{{ t.name }}</a> {% endfor %}
+                Tags: {% for t in post.tags %}<a href="#" class="post-tag">{{ t }}</a> {% endfor %}
             </div>
             <hr>
-            <p>{{ post.body | markdown }}</p>
+            <p>{{ post.body | markdown}}</p>
             <br>
             <div id="comments" class="float-right">Comments: {{ post.comments | length }}</div>
             <hr>
