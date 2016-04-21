@@ -3,11 +3,11 @@
     <div class="blog-post">
         <h3><a href="{{ url_for('post', slug=post.display_title)}}">{{ post.title }}</a> <small>{{ post.date }}</small></h3>
         <p>{{ post.short_desc | markdown }}</p>
-        <div class="callout">
-        <ul class="menu simple">
+        <div class="post-callout">
+        <ul>
             <li><a href="{{ url_for('user', display_name=post.author.display_name) }}">Author: {{ post.author.display_name }}</a></li>
             <li><a href="{{ url_for('post', slug=post.display_title, _external=True) + '#comments'}}">Comments: {{ post.comments | length }}</a></li>
-            <li><i class="fi-pricetag-multiple"></i><span> {% for t in post._tags %}<a href="{{ url_for('tag', name=t.name) }}" class="post-tag">{{ t.name }}</a> {% endfor %}</span></li>
+            <li><i class="fi-pricetag-multiple"></i><span> {% for t in post._tags %}<a href="{{ url_for('tag', name=t.name) }}" class="tag">{{ t.name }}</a> {% endfor %}</span></li>
         </ul>
         </div>
     </div>

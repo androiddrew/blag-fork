@@ -12,7 +12,7 @@
                 Posted By: <a href="{{ url_for('user', display_name=post.author.display_name) }}">{{ post.author.display_name }}</a>
             </div>
             <div>
-                Tags: {% for t in post._tags %}<a href="{{ url_for('tag', name=t.name) }}" class="post-tag">{{ t.name }}</a> {% endfor %}
+                Tags: {% for t in post._tags %}<a href="{{ url_for('tag', name=t.name) }}" class="tag">{{ t.name }}</a> {% endfor %}
             </div>
             <hr>
             <p>{{ post.body | markdown }}</p>

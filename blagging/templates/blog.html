@@ -32,7 +32,7 @@
 <h4>Categories</h4>
 <ul>
     {% for t in all_tags() %}
-        <li><a href="{{ url_for('tag', name=t.name) }}">{{ t }}</a></li>
+        <li><a class="tag" href="{{ url_for('tag', name=t.name) }}">{{ t }}</a></li>
     {% endfor %}
 </ul>
 <h4>Authors</h4>

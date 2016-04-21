@@ -172,16 +172,6 @@ $menu-text-color: #fff;
 .push {
         margin-bottom: 40px;
 }
-
-.post-tag{
-        color: #39739d;
-        display: inline-block;
-        margin: 2px 2px 2px 0;
-        background: #E1ECF4;
-        padding: .1rem .5rem;
-        border-radius: 2px;
-}
-
 /* Used to stack callouts on top of each other */
 .callout-stack{
   .callout{
@@ -199,3 +189,35 @@ $menu-text-color: #fff;
   }
 }
 
+.post-callout{
+	@include callout-base;
+	ul{
+		list-style-type: none;
+		margin:0 0 0 0;
+		li{
+			display: inline-block;
+			margin-left: 1rem;
+		}
+	}
+}
+
+.tag{
+	@include label;
+	background: $primary-color;
+	color: foreground($label-background);
+	-webkit-transition: background 0.25s ease;
+	-moz-transition: background 0.25s ease;
+	-o-transition: background 0.25s ease;
+	transition: background 0.25s ease;
+	&:hover{
+		background: $medium-gray;
+		color: foreground($label-background);	
+	}
+}
+
+.count{
+	@include badge;
+	padding: 0.4em;
+	background: $primary-color;
+	color: foreground($label-background);
+}
