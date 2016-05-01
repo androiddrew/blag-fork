@@ -8,7 +8,7 @@ Blagging -- {{ author.display_name }}
     <div class="row medium-10 large-8 columns">
     <article>
         <header>
-            <h1>Posts authored by {{ author.display_name }}</h1>
+            <h1 class="text-center">Posts authored by {{ author.display_name }}</h1>
 
             {% if author.posts.count() > 0 %}
                 {% with posts = author.posts %}

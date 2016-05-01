@@ -40,6 +40,9 @@
 //  35. Tooltip
 //  36. Top Bar
 
+//Importing google font for use in settings
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
 @import 'util/util';
 
 // 1. Global
@@ -102,7 +105,7 @@ $block-grid-max: 8;
 // 4. Base Typography
 // ------------------
 
-$header-font-family: $body-font-family;
+$header-font-family: Montserrat; //$body-font-family;
 $header-font-weight: $global-weight-normal;
 $header-font-style: normal;
 $font-family-monospace: Consolas, 'Liberation Mono', Courier, monospace;

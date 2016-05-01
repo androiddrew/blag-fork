@@ -12,10 +12,12 @@
                 <div class="callout">
                     <div class="row">
                         <div class="medium-6 large-6 columns">
-                            <p><strong>Title: </strong>{{post.title}}</p>
-                            <p><strong>Published: </strong>{{ post.published }}</p>
-                            <p><strong>Created Dated: </strong>{{ post.date }}</p>
-                            <p><strong>Last Modified: </strong>{{ post.date_modified }}</p>
+                            <ul style="list-style-type: none;">
+                            <li><strong>Title: </strong>{{post.title}}</li>
+                            <li><strong>Published: </strong>{{ post.published }}</li>
+                            <li><strong>Created Dated: </strong>{{ post.date }}</li>
+                            <li><strong>Last Modified: </strong>{{ post.date_modified }}</li>
+                            </ul>
                         </div>
                         <div class="medium-6 large-6 columns">
                             <p>{{ post.body | truncate(length=200, killwords=True)}}</p>

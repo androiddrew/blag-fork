@@ -6,7 +6,7 @@
                 Posted By: <a href="#">{{ post.author.display_name}}</a>
             </div>
             <div>
-                Tags: {% for t in post.tags %}<a href="#" class="post-tag">{{ t }}</a> {% endfor %}
+                Tags: {% for t in post.tags %}<a href="#" class="tag">{{ t }}</a> {% endfor %}
             </div>
             <hr>
             <p>{{ post.body | markdown}}</p>

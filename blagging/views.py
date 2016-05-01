@@ -92,7 +92,7 @@ def add():
 @app.route('/edit')
 @login_required
 def edit():
-    posts = Post.query.filter(Post.author_id == current_user.id).all()
+    posts = Post.query.filter(Post.author_id == current_user.id).order_by(Post.date.desc()).all()
     return render_template('edit_list.html', posts=posts)
 
 
