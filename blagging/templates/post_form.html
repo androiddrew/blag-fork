@@ -5,10 +5,14 @@
 Blagging -- Add Post
 {% endblock %}
 
+{% block styles %}
+    {{ super() }}
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+{% endblock %}
 
 {% block content%}
     <div class="row">
-        <div class="medium-8 medium-centered large-6 large-centered columns">
+        <div class="medium-10 medium-centered large-8 large-centered columns">
             <form id="postForm" action="" method="post">
                 {{form.hidden_tag()}} <!-- prevents CSRF attack -->
                 <div class="row column">
@@ -28,8 +32,8 @@ Blagging -- Add Post
                     <fieldset class="fieldset">
                         <legend>Post Content</legend>
                     {{ render_field(form.title) }}
-                    {{ render_field(form.short_desc,rows='3') }}
-                    {{ render_field(form.body, rows='10') }}
+                    {{ render_field(form.short_desc,rows='3', class='mdm-input') }}
+                    {{ render_field(form.body, rows='10', class='mdm-input') }}
                     {{ render_field(form.tags) }}
                     </fieldset>
                     <input type="submit" class="button" value="Submit">
@@ -49,6 +53,9 @@ Blagging -- Add Post
 {% endblock%}
 {% block scripts %}
 {{ super() }}
+<script src="{{ url_for('static', filename='js/a-tools.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ url_for('static', filename='js/showdown.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ url_for('static', filename='js/mdmagick.js') }}" type="text/javascript" charset="utf-8"></script>
 <script>
     $(document).ready(function(){
         $('#preview').click(function(){
