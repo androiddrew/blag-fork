@@ -198,8 +198,22 @@ $menu-text-color: #fff;
 			display: inline-block;
 			margin-left: 1rem;
 		}
+
 	}
 }
+
+.post-footer{
+	ul{
+		list-style-type: none;
+		margin:0 0 0 0;
+		li{
+			display: inline-block;
+			margin-left: 1rem;
+		}
+
+	}
+}
+
 
 .tag{
 	@include label;

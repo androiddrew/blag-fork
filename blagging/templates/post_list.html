@@ -2,15 +2,10 @@
 {% for post in posts %}
     <div class="blog-post">
         <h3><a href="{{ url_for('post', slug=post.display_title)}}">{{ post.title }}</a></h3>
-        <h6>By: <a href="{{ url_for('user', display_name=post.author.display_name) }}">{{ post.author.display_name }}</a> | {{ post.date }}</h6>
+        <h6>By: <a href="{{ url_for('user', display_name=post.author.display_name) }}">{{ post.author.display_name }}</a> | {{ post.date | strftime }}</h6>
+        <h6><i class="fi-pricetag-multiple"></i><span> {% for t in post._tags %}<a href="{{ url_for('tag', name=t.name) }}" class="tag">{{ t.name }}</a> {% endfor %}</span></h6>
         <p>{{ post.short_desc | markdown }}</p>
         <a href="{{ url_for('post', slug=post.display_title)}}">Continue Reading...</a>
-        <div class="post-callout">
-        <ul>
-            <li><a href="{{ url_for('user', display_name=post.author.display_name) }}">Author: {{ post.author.display_name }}</a></li>
-            <li><a href="{{ url_for('post', slug=post.display_title, _external=True) + '#comments'}}">Comments: {{ post.comments | length }}</a></li>
-            <li><i class="fi-pricetag-multiple"></i><span> {% for t in post._tags %}<a href="{{ url_for('tag', name=t.name) }}" class="tag">{{ t.name }}</a> {% endfor %}</span></li>
-        </ul>
-        </div>
+        <hr>
     </div>
 {% endfor %}
