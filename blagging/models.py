@@ -1,6 +1,6 @@
 from datetime import datetime as dt
 import re
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 from sqlalchemy.orm import relationship, backref
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -108,6 +108,11 @@ class Tag(db.Model):
     @staticmethod
     def all():
         return Tag.query.all()
+
+    @staticmethod
+    def tag_count():
+        """Return the Tag and the count of tags for display in the catergories section"""
+        return db.session.query(Tag, func.count(tags.c.tag_id)).join(tags, Tag.id==tags.c.tag_id).group_by(Tag.name).all()
 
     def __repr__(self):
         return self.name

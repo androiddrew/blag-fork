@@ -144,7 +144,7 @@ def server_error(e):
 @app.context_processor
 def inject_tags():
     """context_processor similar to the app_context_processor for blueprints"""
-    return dict(all_tags=Tag.all)
+    return dict(all_tags=Tag.all, tags_count=Tag.tag_count)
 
 
 @app.context_processor

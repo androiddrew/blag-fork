@@ -142,6 +142,9 @@ $menu-text-color: #fff;
   p{
     color: $menu-text-color;
   }
+  h6{
+    color: $menu-text-color;
+  }
   .copywrite{
     color: #8f9296;
     font-size: 0.875rem;
@@ -234,4 +237,11 @@ $menu-text-color: #fff;
 	padding: 0.4em;
 	background: $primary-color;
 	color: foreground($label-background);
+}
+
+.profile {
+   border-radius: 50%;
+   border:5px solid #555;
+   hieght: 175px;
+   width: 175px;
 }
