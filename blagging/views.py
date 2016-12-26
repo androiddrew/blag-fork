@@ -74,7 +74,7 @@ def add():
         short_desc = form.short_desc.data
         body = form.body.data
         tags = form.tags.data
-        published = int(form.published.data)
+        published = form.published.data
         post = Post(author=current_user, title=title, display_title=title, short_desc=short_desc, body=body, tags=tags,
                     published=published)
         db.session.add(post)

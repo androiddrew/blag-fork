@@ -1,6 +1,7 @@
 from datetime import datetime as dt
 import re
 from sqlalchemy import desc, func
+from sqlalchemy.orm import relationship, backref
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from . import db
@@ -17,6 +18,7 @@ class Author(db.Model, UserMixin):
     email = db.Column(db.String(64), unique=True, index=True)
     display_name = db.Column(db.String(25), unique=True)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    comments = db.relationship('Comment', backref='user', lazy='dynamic')
     password_hash = db.Column(db.String)
 
     @property
@@ -52,6 +54,7 @@ class Post(db.Model):
     # secondary setups the link table between Tag and Post backref add a post attribute to the Tag
     _tags = db.relationship('Tag', secondary=tags, backref=db.backref('posts',
                                                                       lazy='dynamic'))
+    comments = db.relationship('Comment', backref=db.backref('post', lazy='joined') )# leave lazy loading off
 
     @staticmethod
     def newest(num):
@@ -97,7 +100,7 @@ class Tag(db.Model):
     @staticmethod
     def tag_count():
         """Return the Tag and the count of tags for display in the catergories section"""
-        return db.session.query(Tag, func.count(tags.c.tag_id)).join(tags, Tag.id==tags.c.tag_id).group_by(Tag.name).all()
+        return db.session.query(Tag, func.count(tags.c.tag_id)).join(tags, Tag.id==tags.c.tag_id).group_by(Tag).all()
 
     def __repr__(self):
         return self.name
