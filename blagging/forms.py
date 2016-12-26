@@ -3,7 +3,7 @@ from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField
 
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, ValidationError
 
-from .models import Author, Post
+from .models import Post
 
 
 class LoginForm(Form):

@@ -1,11 +1,8 @@
-import random
-
 from flask_script import Manager, prompt_bool
 
-from blagging import app, create_app, db
+from blagging import app, db
 from blagging.models import Post, Author, Tag
 
-# app = create_app('dev')
 manager = Manager(app)
 
 @manager.command
