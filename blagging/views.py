@@ -1,9 +1,9 @@
 from datetime import datetime as dt
-from flask import render_template, redirect, request, url_for, abort, render_template_string
+from flask import render_template, redirect, request, url_for, abort
 from flask_login import login_user, logout_user, login_required, current_user, login_url
 from . import app, db, login_manager
-from .models import Post, Tag, Author, tags as Post_Tag, Comment
-from .forms import LoginForm, PostForm, CommentForm
+from .models import Post, Tag, Author, tags as Post_Tag
+from .forms import LoginForm, PostForm
 
 
 # Auth#################
@@ -44,15 +44,7 @@ def index(page_num=1):
 @app.route('/post/<slug>', methods=['GET', 'POST'])
 def post(slug):
     post = Post.query.filter_by(_display_title=slug).filter(Post.published == True).first_or_404()
-    form = CommentForm()
-    if form.validate_on_submit():
-        comment_text = form.text.data
-        user = current_user._get_current_object()
-        comment = Comment(user=user, post=post, text=comment_text)
-        db.session.add(comment)
-        db.session.commit()
-        return redirect(url_for('post', slug=post.display_title))
-    return render_template('post.html', post=post, form=form)
+    return render_template('post.html', post=post)
 
 
 @app.route('/tag/<name>')

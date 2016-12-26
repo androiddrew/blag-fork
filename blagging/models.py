@@ -1,7 +1,6 @@
 from datetime import datetime as dt
 import re
 from sqlalchemy import desc, func
-from sqlalchemy.orm import relationship, backref
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from . import db
@@ -18,7 +17,6 @@ class Author(db.Model, UserMixin):
     email = db.Column(db.String(64), unique=True, index=True)
     display_name = db.Column(db.String(25), unique=True)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
-    comments = db.relationship('Comment', backref='user', lazy='dynamic')
     password_hash = db.Column(db.String)
 
     @property
@@ -54,7 +52,6 @@ class Post(db.Model):
     # secondary setups the link table between Tag and Post backref add a post attribute to the Tag
     _tags = db.relationship('Tag', secondary=tags, backref=db.backref('posts',
                                                                       lazy='dynamic'))
-    comments = db.relationship('Comment', backref=db.backref('post', lazy='joined') )# leave lazy loading off
 
     @staticmethod
     def newest(num):
@@ -81,18 +78,6 @@ class Post(db.Model):
             self._tags = [Tag.get_or_create(name) for name in string.split(',')]
         else:
             self._tags = []
-
-
-class Comment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
-    date = db.Column(db.DateTime, default=dt.utcnow)
-    text = db.Column(db.String, nullable=False)
-    # Sets up an Adjacency List Relationship for comments to be self referential
-    # parent_id = db.Column(db.Integer(), db.ForeignKey('comment.id'))
-    # children = relationship("Comment", backref=backref('parent', remote_side=[id]), lazy='joined', join_depth=2)
-
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)

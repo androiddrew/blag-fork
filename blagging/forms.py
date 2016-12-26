@@ -33,7 +33,3 @@ class PostForm(Form):
         post = Post.query.filter_by(title=title_field.data).first()
         if post and post.id != self.post_id:
             raise ValidationError('This title has already been used.')
-
-
-class CommentForm(Form):
-    text = TextAreaField("Leave a comment", validators=[DataRequired()])

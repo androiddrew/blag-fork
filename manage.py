@@ -3,7 +3,7 @@ import random
 from flask_script import Manager, prompt_bool
 
 from blagging import app, create_app, db
-from blagging.models import Post, Author, Tag, Comment
+from blagging.models import Post, Author, Tag
 
 # app = create_app('dev')
 manager = Manager(app)
@@ -38,40 +38,21 @@ def test_data():
     db.session.add(androiddrew)
     db.session.add(lauraurban)
 
-    def random_comments():
-        """Returns a random sample of comments from the test comments list"""
-        test_comments = ["This looks great", "Why doesn't this work?", "Who killed the king?",
-                         "Would you call this spam",
-                         "No one ever expects the spanish inquisition!", "Are you a Cyclon?",
-                         "Can't wait for the movie",
-                         "Never in my life did I expect to do this", "Casey it's time for dinner", "Great"]
 
-        return random.sample(test_comments, random.randrange(1, len(test_comments)))
-
-    def add_comment(text, post):
-        db.session.add(Comment(text=text, post=post, user=lauraurban))
-
-    def add_post(title, short_desc, body, tags, comments=None):
+    def add_post(title, short_desc, body, tags):
         post = Post(title=title, display_title=title, short_desc=short_desc, body=body, tags=tags,
                     author=androiddrew)
         db.session.add(post)
-        for e in comments:
-            add_comment(e, post)
 
     for name in ['programming', 'flask', 'dirp', 'food']:
         db.session.add(Tag(name=name))
     db.session.commit()
 
-    add_post(title='First post', short_desc=test_short, body=test_body, tags='programming,flask',
-             comments=random_comments())
-    add_post(title='Second post', short_desc=test_short, body=test_body, tags='dirp,flask',
-             comments=random_comments())
-    add_post(title='Third post', short_desc=test_short, body=test_body, tags='programming,food',
-             comments=random_comments())
-    add_post(title='Fourth post', short_desc=test_short, body=test_body, tags='programming,food',
-             comments=random_comments())
-    add_post(title='Inactive', short_desc=test_short, body=test_body, tags='dirp,food',
-             comments=random_comments())
+    add_post(title='First post', short_desc=test_short, body=test_body, tags='programming,flask')
+    add_post(title='Second post', short_desc=test_short, body=test_body, tags='dirp,flask')
+    add_post(title='Third post', short_desc=test_short, body=test_body, tags='programming,food')
+    add_post(title='Fourth post', short_desc=test_short, body=test_body, tags='programming,food')
+    add_post(title='Inactive', short_desc=test_short, body=test_body, tags='dirp,food')
     db.session.commit()
     print('Test data created')
 
