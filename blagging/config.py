@@ -31,7 +31,7 @@ class ProductionConfig(Config):
     POST_PER_PAGE = 10
     try:
         SQLALCHEMY_DATABASE_URI = os.environ['BLOG_DB_CONFIG_STRING']
-        SECRET_KEY = os.environ['BLOG_SECRET_STRING']
+        SECRET_KEY = bytes(os.environ['BLOG_SECRET_STRING'].encode('utf-8'))
     except KeyError:
         pass
 

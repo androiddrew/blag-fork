@@ -3,6 +3,7 @@ from flask_script import Manager, prompt_bool
 from blagging import app, db
 from blagging.models import Post, Author, Tag
 
+
 manager = Manager(app)
 
 @manager.command
