@@ -6,7 +6,7 @@
 <div class="top-bar" id="main-menu">
   <div class="top-bar-left">
     <ul class="dropdown menu" data-dropdown-menu>
-      <a href="{{ url_for('index') }}"><li class="menu-text hvr-underline-from-left">Flask Blagging</li></a>
+      <a href="{{ url_for('index') }}"><li class="menu-text hvr-underline-from-left">The Blag</li></a>
     </ul>
   </div>
   <div class="top-bar-right">
@@ -21,8 +21,6 @@
         </ul>
       </li>
       <li class="hvr-underline-from-right"><a href="{{ url_for('logout') }}">Logout</a></li>
-      {% else %}
-      <li class="hvr-underline-from-right"><a href="{{ url_for('login') }}">Login</a></li>
       {% endif %}
     </ul>
   </div>
