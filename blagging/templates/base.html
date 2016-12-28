@@ -7,8 +7,7 @@
     <title>{% block title %}{% endblock %}</title>
   {% block styles%}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
-    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/foundation-icons.css') }}">-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
   {% endblock %}
   </head>
   <body>
@@ -28,12 +27,20 @@
           <p class="copywrite">© Andrew Bednar 2016</p>
       </div>
   </footer>
-  {% block scripts %}
-    <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.js') }}"></script>
-    <script src="{{ url_for('static', filename='bower_components/what-input/what-input.js') }}"></script>
-    <script src="{{ url_for('static', filename='bower_components/foundation-sites/dist/foundation.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/stickyFooter.js') }}"></script>
-  {% endblock %}
+  {% if config.DEBUG %}
+      {% block scripts %}
+        <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.js') }}"></script>
+        <script src="{{ url_for('static', filename='bower_components/what-input/what-input.js') }}"></script>
+        <script src="{{ url_for('static', filename='bower_components/foundation-sites/dist/foundation.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/stickyFooter.js') }}"></script>
+      {% endblock %}
+  {% else %}
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+      <script src="{{ url_for('static', filename='bower_components/what-input/what-input.js') }}"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.0/foundation.min.js"></script>
+      <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/stickyFooter.js') }}"></script>
+  {% endif %}
   </body>
 </html>

@@ -18,7 +18,6 @@ class Author(db.Model, UserMixin):
     email = db.Column(db.String(64), unique=True, index=True)
     display_name = db.Column(db.String(25), unique=True)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
-    comments = db.relationship('Comment', backref='user', lazy='dynamic')
     password_hash = db.Column(db.String)
 
     @property
