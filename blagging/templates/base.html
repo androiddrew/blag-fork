@@ -36,11 +36,13 @@
         <script src="{{ url_for('static', filename='js/stickyFooter.js') }}"></script>
       {% endblock %}
   {% else %}
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-      <script src="{{ url_for('static', filename='bower_components/what-input/what-input.js') }}"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.0/foundation.min.js"></script>
-      <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/stickyFooter.js') }}"></script>
+      {% block scripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='bower_components/what-input/what-input.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.0/foundation.min.js"></script>
+        <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/stickyFooter.js') }}"></script>
+      {% endblock %}
   {% endif %}
   </body>
 </html>
