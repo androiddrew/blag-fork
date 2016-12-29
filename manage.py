@@ -1,5 +1,5 @@
 from flask_script import Manager, prompt_bool
-
+from sqlalchemy.exc import SQLAlchemyError
 from blagging import app, db
 from blagging.models import Post, Author, Tag
 
@@ -8,14 +8,22 @@ manager = Manager(app)
 
 @manager.command
 def initdb():
-    db.create_all()
+    try:
+        db.create_all()
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        print("Error creating database: {}".format(e))
     print('Database Initialized')
 
 
 @manager.command
 def dropdb():
     if prompt_bool('Are you sure you want to drop the database?'):
-        db.drop_all()
+        try:
+            db.drop_all()
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print("Error dropping data: {}".format(e))
         print('Database tables dropped')
 
 
@@ -24,6 +32,14 @@ def create_admin():
     admin = Author(display_name="admin", email="admin@fake.com", password="admin")
     placeholder = Post(title="Placeholder", display_title="Placeholder", short_desc="Placeholder", body="Placeholder", tags="Placeholder",
                        author=admin)
+    try:
+        db.session.add(admin)
+        db.session.commit()
+        db.session.add(placeholder)
+        db.session.commit()
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        print("Error inserting adding: {}".format(e))
     print("admin and first entry created")
 
 @manager.command
@@ -40,25 +56,37 @@ def test_data():
 
     androiddrew = Author(display_name='Androiddrew', email='drew@androiddrew.com', password='2Blogging$')
     lauraurban = Author(display_name='UrbanDecayed', email='kolady.laura@fake.com', password='test')
-    db.session.add(androiddrew)
-    db.session.add(lauraurban)
-
+    try:
+        db.session.add(androiddrew)
+        db.session.add(lauraurban)
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        print("Error inserting users: {}".format(e))
 
     def add_post(title, short_desc, body, tags):
         post = Post(title=title, display_title=title, short_desc=short_desc, body=body, tags=tags,
                     author=androiddrew)
         db.session.add(post)
 
-    for name in ['programming', 'flask', 'dirp', 'food']:
-        db.session.add(Tag(name=name))
-    db.session.commit()
+    try:
+        for name in ['programming', 'flask', 'dirp', 'food']:
+            db.session.add(Tag(name=name))
+        db.session.commit()
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        print("Error inserting Tags: {}".format(e))
 
-    add_post(title='First post', short_desc=test_short, body=test_body, tags='programming,flask')
-    add_post(title='Second post', short_desc=test_short, body=test_body, tags='dirp,flask')
-    add_post(title='Third post', short_desc=test_short, body=test_body, tags='programming,food')
-    add_post(title='Fourth post', short_desc=test_short, body=test_body, tags='programming,food')
-    add_post(title='Inactive', short_desc=test_short, body=test_body, tags='dirp,food')
-    db.session.commit()
+    try:
+        add_post(title='First post', short_desc=test_short, body=test_body, tags='programming,flask')
+        add_post(title='Second post', short_desc=test_short, body=test_body, tags='dirp,flask')
+        add_post(title='Third post', short_desc=test_short, body=test_body, tags='programming,food')
+        add_post(title='Fourth post', short_desc=test_short, body=test_body, tags='programming,food')
+        add_post(title='Inactive', short_desc=test_short, body=test_body, tags='dirp,food')
+        db.session.commit()
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        print("Error inserting posts: {}".format(e))
+
     print('Test data created')
 
 

@@ -7,11 +7,15 @@ class Config:
     SECRET_KEY = "Secret string"
     DEBUG = False
     POST_PER_PAGE = 3
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'devblagging.db')
+    try:
+        SQLALCHEMY_DATABASE_URI = os.environ['BLOG_DB_DEV_CONFIG_STRING']
+    except KeyError:
+        pass
 
 
 class TestingConfig(Config):
@@ -28,7 +32,7 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     DEBUG = False
     TESTING = False
-    POST_PER_PAGE = 10
+    POST_PER_PAGE = 5
     try:
         SQLALCHEMY_DATABASE_URI = os.environ['BLOG_DB_CONFIG_STRING']
         SECRET_KEY = bytes(os.environ['BLOG_SECRET_STRING'].encode('utf-8'))

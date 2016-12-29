@@ -22,7 +22,7 @@ def create_app(config_name):
     md.register_extension(MultilineCodeExtension)
     return app
 
-app = create_app('dev')
+app = create_app('prod')
 
 
 import blagging.models

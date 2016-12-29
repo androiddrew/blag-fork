@@ -6,6 +6,8 @@ from .models import Post, Tag, Author, tags as Post_Tag
 from .forms import LoginForm, PostForm
 
 
+
+
 # Auth#################
 @login_manager.user_loader
 def load_user(userid):
