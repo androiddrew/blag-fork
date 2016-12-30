@@ -1,4 +1,4 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField
 
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, ValidationError
@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, Val
 from .models import Post
 
 
-class LoginForm(Form):
+class LoginForm(FlaskForm):
     username = StringField('Username: ', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Keep me logged in')
@@ -15,7 +15,7 @@ class LoginForm(Form):
         return True
 
 
-class PostForm(Form):
+class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     published = SelectField('Status', choices=[('1', 'Published'), ('0', 'Draft')], validators=[DataRequired()])
     short_desc = TextAreaField("Front page display", validators=[DataRequired()])
@@ -23,7 +23,7 @@ class PostForm(Form):
     tags = StringField('Tags')
 
     def __init__(self, *args, **kwargs):
-        Form.__init__(self, *args, **kwargs)
+        FlaskForm.__init__(self, *args, **kwargs)
         if 'post_id' in kwargs:
             self.post_id = kwargs['post_id']
         else:

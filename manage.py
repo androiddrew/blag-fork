@@ -45,47 +45,48 @@ def create_admin():
 @manager.command
 def test_data():
     """Command to populate database with test data"""
+    with db.session.no_autoflush:
 
-    test_short = 'This is going to be the portion of the post that is displayed to the end user when they first \
-        log into the app.'
+        test_short = 'This is going to be the portion of the post that is displayed to the end user when they first \
+            log into the app.'
 
-    test_body = "Lorem ipsum dolor sit amet, debet gubergren duo at, tamquam veritus verterem mea in, eu cibo iudico \
-        pri. Postea discere perfecto cum ut. Mel agam melius repudiare at. Eu voluptua nominati vix, mandamus \
-        inciderint pri in. Accommodare mediocritatem has ex. Mel et hinc facer lobortis, at officiis corrumpit \
-        consetetur pri, quo no ignota tritani."
+        test_body = "Lorem ipsum dolor sit amet, debet gubergren duo at, tamquam veritus verterem mea in, eu cibo iudico \
+            pri. Postea discere perfecto cum ut. Mel agam melius repudiare at. Eu voluptua nominati vix, mandamus \
+            inciderint pri in. Accommodare mediocritatem has ex. Mel et hinc facer lobortis, at officiis corrumpit \
+            consetetur pri, quo no ignota tritani."
 
-    androiddrew = Author(display_name='Androiddrew', email='drew@androiddrew.com', password='2Blogging$')
-    lauraurban = Author(display_name='UrbanDecayed', email='kolady.laura@fake.com', password='test')
-    try:
-        db.session.add(androiddrew)
-        db.session.add(lauraurban)
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print("Error inserting users: {}".format(e))
+        androiddrew = Author(display_name='Androiddrew', email='drew@androiddrew.com', password='2Blogging$')
+        lauraurban = Author(display_name='UrbanDecayed', email='kolady.laura@fake.com', password='test')
+        try:
+            db.session.add(androiddrew)
+            db.session.add(lauraurban)
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print("Error inserting users: {}".format(e))
 
-    def add_post(title, short_desc, body, tags):
-        post = Post(title=title, display_title=title, short_desc=short_desc, body=body, tags=tags,
-                    author=androiddrew)
-        db.session.add(post)
+        def add_post(title, short_desc, body, tags):
+            post = Post(title=title, display_title=title, short_desc=short_desc, body=body, tags=tags,
+                        author=androiddrew)
+            db.session.add(post)
 
-    try:
-        for name in ['programming', 'flask', 'dirp', 'food']:
-            db.session.add(Tag(name=name))
-        db.session.commit()
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print("Error inserting Tags: {}".format(e))
+        try:
+            for name in ['programming', 'flask', 'dirp', 'food']:
+                db.session.add(Tag(name=name))
+            db.session.commit()
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print("Error inserting Tags: {}".format(e))
 
-    try:
-        add_post(title='First post', short_desc=test_short, body=test_body, tags='programming,flask')
-        add_post(title='Second post', short_desc=test_short, body=test_body, tags='dirp,flask')
-        add_post(title='Third post', short_desc=test_short, body=test_body, tags='programming,food')
-        add_post(title='Fourth post', short_desc=test_short, body=test_body, tags='programming,food')
-        add_post(title='Inactive', short_desc=test_short, body=test_body, tags='dirp,food')
-        db.session.commit()
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print("Error inserting posts: {}".format(e))
+        try:
+            add_post(title='First post', short_desc=test_short, body=test_body, tags='programming,flask')
+            add_post(title='Second post', short_desc=test_short, body=test_body, tags='dirp,flask')
+            add_post(title='Third post', short_desc=test_short, body=test_body, tags='programming,food')
+            add_post(title='Fourth post', short_desc=test_short, body=test_body, tags='programming,food')
+            add_post(title='Inactive', short_desc=test_short, body=test_body, tags='dirp,food')
+            db.session.commit()
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print("Error inserting posts: {}".format(e))
 
     print('Test data created')
 
