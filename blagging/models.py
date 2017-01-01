@@ -48,7 +48,7 @@ class Post(db.Model):
     title = db.Column(db.String(80), nullable=False)
     _display_title = db.Column(db.String(80), nullable=False, unique=True, index=True)
     published = db.Column(db.Boolean, nullable=False, default=True)
-    short_desc = db.Column(db.String(200))
+    short_desc = db.Column(db.String())
     body = db.Column(db.String)
     # secondary setups the link table between Tag and Post backref add a post attribute to the Tag
     _tags = db.relationship('Tag', secondary=tags, backref=db.backref('posts',

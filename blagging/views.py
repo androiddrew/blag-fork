@@ -79,8 +79,9 @@ def add():
         published = form.published.data
         post = Post(author=current_user, title=title, display_title=title, short_desc=short_desc, body=body, tags=tags,
                     published=published)
-        db.session.add(post)
-        db.session.commit()
+        with db.session.no_autoflush:
+            db.session.add(post)
+            db.session.commit()
         return redirect(url_for('index'))
     return render_template('post_form.html', form=form)
 
