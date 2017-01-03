@@ -16,7 +16,7 @@ class DevelopmentConfig(Config):
     try:
         SQLALCHEMY_DATABASE_URI = os.environ['BLOG_DB_DEV_CONFIG_STRING']
     except KeyError:
-        print("failed to load")
+        print("No Development DB configured")
 
 
 class TestingConfig(Config):
@@ -27,7 +27,7 @@ class TestingConfig(Config):
     try:
         SQLALCHEMY_DATABASE_URI = os.environ['BLOG_DB_TEST_CONFIG_STRING']
     except KeyError:
-        print("failed to load")
+        print("No Test DB configured")
 
 
 class ProductionConfig(Config):
@@ -38,8 +38,8 @@ class ProductionConfig(Config):
         SQLALCHEMY_DATABASE_URI = os.environ['BLOG_DB_CONFIG_STRING']
         SECRET_KEY = bytes(os.environ['BLOG_SECRET_STRING'].encode('utf-8'))
     except KeyError as e:
-        print("Key Error {}".format(e))
-        raise e
+        print("No Production DB configured")
+
 
 config_by_name = dict(dev=DevelopmentConfig,
                       test=TestingConfig,

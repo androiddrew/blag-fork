@@ -55,7 +55,7 @@ def test_data():
             inciderint pri in. Accommodare mediocritatem has ex. Mel et hinc facer lobortis, at officiis corrumpit \
             consetetur pri, quo no ignota tritani."
 
-        androiddrew = Author(display_name='Androiddrew', email='drew@androiddrew.com', password='2Blogging$')
+        androiddrew = Author(display_name='Androiddrew', email='drew@androiddrew.com', password='test')
         lauraurban = Author(display_name='UrbanDecayed', email='kolady.laura@fake.com', password='test')
         try:
             db.session.add(androiddrew)
