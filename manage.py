@@ -6,6 +6,15 @@ from blagging.models import Post, Author, Tag
 
 manager = Manager(app)
 
+
+@manager.command
+def passwd(user, passwd):
+    user = db.session.query(Author).filter_by(display_name=user).one()
+    user.password = passwd
+    db.session.commit()
+    print("Password Changed")
+
+
 @manager.command
 def initdb():
     try:
