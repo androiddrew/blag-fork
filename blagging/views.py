@@ -34,8 +34,7 @@ def logout():
 # MAIN##############
 
 @app.route('/')
-@app.route('/blog')
-@app.route('/blog/page/<int:page_num>')
+@app.route('/page/<int:page_num>')
 def index(page_num=1):
     query = Post.query.filter(Post.published == True)
     pagination = query.order_by(Post.date.desc()).paginate(page=page_num, per_page=app.config['POST_PER_PAGE'],
@@ -140,6 +139,11 @@ def server_error(e):
 def inject_tags():
     """context_processor similar to the app_context_processor for blueprints"""
     return dict(all_tags=Tag.all, tags_count=Tag.tag_count)
+
+@app.context_processor
+def inject_recent_posts():
+    """context_processor similar to the app_context_processor for blueprints for recent posts"""
+    return dict(recent_posts=Post.recent)
 
 
 @app.context_processor

@@ -245,3 +245,29 @@ $menu-text-color: #fff;
    hieght: 175px;
    width: 175px;
 }
+
+
+i.small {
+    font-size: 0.8rem;
+}
+
+i.medium {
+    font-size: 1.2rem;
+}
+
+i.large {
+    font-size: 2.0rem;
+}
+
+.social {
+    i {
+        padding: 2px 2px 2px 2px;
+        color: $menu-text-color;
+    }
+}
+
+.recent-posts {
+    a {
+        display: block;
+    }
+}

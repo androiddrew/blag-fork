@@ -9,7 +9,7 @@ Blagging -- Posts tagged {{ tag }}
     <div class="row medium-10 large-8 columns">
     <article>
         <header>
-            <h1 class="text-center">Posts tagged "{{ tag }}"</h1>
+            <h1 class="text-center">Posts tagged "{{ tag.name }}"</h1>
 
             {% if pagination.total > 0 %}
                 {% with posts = pagination.items %}

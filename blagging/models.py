@@ -36,7 +36,7 @@ class Author(db.Model, UserMixin):
         return Author.query.filter_by(display_name=username).first()
 
     def __repr__(self):
-        return '<User: %r >' % self.display_name
+        return "<User(display_name='{self.display_name}')>".format(self=self)
 
 
 
@@ -54,10 +54,8 @@ class Post(db.Model):
     _tags = db.relationship('Tag', secondary=tags, backref=db.backref('posts',
                                                                       lazy='dynamic'))
 
-    @staticmethod
-    def newest(num):
-        """Returns a list of posts"""
-        return Post.query.order_by(desc(Post.date)).limit(num)
+    def __repr__(self):
+        return "<Post(title='{self.title}', published={self.published})>".format(self=self)
 
     @property
     def display_title(self):
@@ -80,6 +78,10 @@ class Post(db.Model):
         else:
             self._tags = []
 
+    @staticmethod
+    def recent():
+        return Post.query.filter_by(published=True).order_by(Post.date.desc()).limit(3).all()
+
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(25), nullable=False, unique=True, index=True)
@@ -98,7 +100,7 @@ class Tag(db.Model):
     @staticmethod
     def tag_count():
         """Return the Tag and the count of tags for display in the catergories section"""
-        return db.session.query(Tag, func.count(tags.c.tag_id)).join(tags, Tag.id==tags.c.tag_id).group_by(Tag).all()
+        return db.session.query(Tag.name, func.count(tags.c.tag_id)).join(tags, Tag.id==tags.c.tag_id).group_by(Tag).all()
 
     def __repr__(self):
-        return self.name
+        return "<Tag(name='{self.name}')>".format(self=self)

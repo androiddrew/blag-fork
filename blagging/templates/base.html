@@ -18,9 +18,19 @@
       <div class="row">
           <div class="small-12 medium-6 large-6 columns">
               <h6>Recent Articles</h6>
+              <div class="recent-posts">
+              {% for post in recent_posts() %}
+                  <a href="{{ url_for('post', slug=post.display_title)}}">{{ post.title }}</a>
+              {% endfor %}
+              </div>
           </div>
           <div class="small-12 medium-6 large-6 columns">
               <h6>Social</h6>
+              <div class="social">
+                  <a href="https://github.com/androiddrew"><i class="fi-social-github large"></i></a>
+                  <a href="https://www.youtube.com/channel/UChaYrkbU5oV4WZft_7pNA-Q"><i class="fi-social-youtube large"></i></a>
+                  <a href="https://www.linkedin.com/in/andrew-bednar-960619b"><i class="fi-social-linkedin large"></i></a>
+              </div>
           </div>
       </div>
       <div class="row">
