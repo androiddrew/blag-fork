@@ -5,3 +5,5 @@ __pycache__
 *.pyc
 *.bak
 *.log
+*.egg-info
+dist

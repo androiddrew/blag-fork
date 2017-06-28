@@ -1,6 +1,7 @@
 recursive-include blagging/templates *
 recursive-include blagging/static *.json *.js .bowerrc
-recursive-include blagging/static/scss
-prune blagging/static/css
+recursive-include blagging/static/scss *
+recursive-include blagging/static/css *
+prune blagging/static/css *
 prune blagging/static/bower_components
-print blagging/node_modules
+prune blagging/static/node_modules
