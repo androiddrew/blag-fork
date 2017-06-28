@@ -1,10 +1,10 @@
-#Blag-fork
+# Blag-fork
 
 Blag-fork is a blogging engine written in Python using the Flask web framework, and Zurb foundation. It is intended to be simple blog engine that one can self host and feel good that they aren't using a PHP based application like Wordpress.
 
 **Sorry Legacy python is not supported.** We make no guarantees that this software will run using a Python 2.x interpreter
 
-##INSTALLATION
+## INSTALLATION
 
 It is recommended that you create a virtual environment for running this project. Please use venv. For more info see https://docs.python.org/3/library/venv.html
 
@@ -21,12 +21,12 @@ npm start
 This project provides a Flask-Script manager at `/blag-fork/manage.py`. Please see the documentation at https://flask-script.readthedocs.io/en/latest/
 
 
-##ENVIRONMENTAL VARIABLES
+## ENVIRONMENTAL VARIABLES
 
 Depending on the wsgi web server you choose you may need to either add the below environment variables either in the
 `/etc/environment` file or pass theses as environmental variable arguments to the web server config string
 
-###FLASK SECRET
+### FLASK SECRET
 
 This project uses cookie based sessions to track the author's login. You will need to set an environmental variable for BLOG_SECRET_STRING. See /blag-fork/blagging/config.py.
 
@@ -38,14 +38,14 @@ You can create a secret key using in the python RPEL with the below commands
 
 Be sure to escape any `\` in the output when passing this string to a wsgi web server's config
 
-###DATABASE CONNECTION STRING
+### DATABASE CONNECTION STRING
 
 This project uses SQLAlchemy. You will need to set a environmental variable for the db connection string using BLOG_DB_CONFIG_STRING. Database connections strings are dependent on the database you choose for the backend see http://docs.sqlalchemy.org/en/latest/core/engines.html for details relating to your specific server.
 
 
-##WSGI SERVERS
+## WSGI SERVERS
 
-###GUNICORN
+### GUNICORN
 
 If you are not famaliar with WSGI servers it is recommended that you start with gunicorn. To serve this in production in a modern Linux distro you will want to create a systemd unit file that executes the wsgi app. Here is an example config that can help boot strap your project. You will want to change these parameters as needed, and you can find all the documentation at http://docs.gunicorn.org/en/stable/index.html:
 ```
@@ -54,7 +54,7 @@ If you are not famaliar with WSGI servers it is recommended that you start with 
 
 Digital Ocean has an excellent article for serving Flask Web Applications behind Nginx. I recommend reading the following for those who's WSGI foo is wanting https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-16-04
 
-##HELPER CODE
+## HELPER CODE
 
 Use the below command after changing your .service file for this software. Trust me it helps a lot
 ```
