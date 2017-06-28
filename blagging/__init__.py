@@ -13,6 +13,7 @@ login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "login"
 
+
 def create_app(config_name):
     """Flask app creation factory"""
     app = Flask(__name__)
@@ -29,10 +30,9 @@ def create_app(config_name):
     app.logger.addHandler(handler)
     return app
 
-app = create_app('dev')
 
+app = create_app('dev')
 
 import blagging.models
 import blagging.views
 import blagging.forms
-

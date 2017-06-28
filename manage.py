@@ -3,7 +3,6 @@ from sqlalchemy.exc import SQLAlchemyError
 from blagging import app, db
 from blagging.models import Post, Author, Tag
 
-
 manager = Manager(app)
 
 
@@ -39,7 +38,8 @@ def dropdb():
 @manager.command
 def create_admin():
     admin = Author(display_name="admin", email="admin@fake.com", password="admin")
-    placeholder = Post(title="Placeholder", display_title="Placeholder", short_desc="Placeholder", body="Placeholder", tags="Placeholder",
+    placeholder = Post(title="Placeholder", display_title="Placeholder", short_desc="Placeholder", body="Placeholder",
+                       tags="Placeholder",
                        author=admin)
     try:
         db.session.add(admin)
@@ -50,6 +50,7 @@ def create_admin():
         db.session.rollback()
         print("Error inserting adding: {}".format(e))
     print("admin and first entry created")
+
 
 @manager.command
 def test_data():

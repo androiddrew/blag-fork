@@ -6,8 +6,6 @@ from .models import Post, Tag, Author, tags as Post_Tag
 from .forms import LoginForm, PostForm
 
 
-
-
 # Auth#################
 @login_manager.user_loader
 def load_user(userid):
@@ -140,6 +138,7 @@ def server_error(e):
 def inject_tags():
     """context_processor similar to the app_context_processor for blueprints"""
     return dict(all_tags=Tag.all, tags_count=Tag.tag_count)
+
 
 @app.context_processor
 def inject_recent_posts():

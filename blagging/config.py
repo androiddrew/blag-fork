@@ -26,8 +26,8 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     DEBUG = True
     WTF_CSRF_ENABLED = False
-    DEBUG_TB_INTERCEPT_REDIRECTS = False #Remove Debug tool bar intercept redirects or you won't be able to test them
-    TESTING = True #Bubble Execptions to test framework
+    DEBUG_TB_INTERCEPT_REDIRECTS = False  # Remove Debug tool bar intercept redirects or you won't be able to test them
+    TESTING = True  # Bubble Execptions to test framework
     try:
         SQLALCHEMY_DATABASE_URI = os.environ['BLOG_DB_TEST_CONFIG_STRING']
     except KeyError:
@@ -48,5 +48,3 @@ class ProductionConfig(Config):
 config_by_name = dict(dev=DevelopmentConfig,
                       test=TestingConfig,
                       prod=ProductionConfig)
-
-

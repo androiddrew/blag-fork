@@ -39,7 +39,6 @@ class Author(db.Model, UserMixin):
         return "<User(display_name='{self.display_name}')>".format(self=self)
 
 
-
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
@@ -82,6 +81,7 @@ class Post(db.Model):
     def recent():
         return Post.query.filter_by(published=True).order_by(Post.date.desc()).limit(3).all()
 
+
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(25), nullable=False, unique=True, index=True)
@@ -100,7 +100,8 @@ class Tag(db.Model):
     @staticmethod
     def tag_count():
         """Return the Tag and the count of tags for display in the catergories section"""
-        return db.session.query(Tag.name, func.count(tags.c.tag_id)).join(tags, Tag.id==tags.c.tag_id).group_by(Tag).all()
+        return db.session.query(Tag.name, func.count(tags.c.tag_id)).join(tags, Tag.id == tags.c.tag_id).group_by(
+            Tag).all()
 
     def __repr__(self):
         return "<Tag(name='{self.name}')>".format(self=self)
