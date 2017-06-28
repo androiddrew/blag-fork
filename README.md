@@ -23,6 +23,10 @@ This project provides a Flask-Script manager at `/blag-fork/manage.py`. Please s
 
 ## Environmental Variables
 
+### Blog Config
+
+You will need to set a `BLOG_CONFIG` environmental variable equal to "prod" prior to deploying to production
+
 Depending on the wsgi web server you choose you may need to either add the below environment variables either in the
 `/etc/environment` file or pass theses as environmental variable arguments to the web server config string
 

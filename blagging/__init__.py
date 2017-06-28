@@ -1,3 +1,4 @@
+import os
 import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -31,7 +32,7 @@ def create_app(config_name):
     return app
 
 
-app = create_app('prod')
+app = create_app(os.getenv('BLOG_CONFIG') or 'dev')
 
 import blagging.models
 import blagging.views

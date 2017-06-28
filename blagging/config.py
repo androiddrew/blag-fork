@@ -20,7 +20,7 @@ class DevelopmentConfig(Config):
     try:
         SQLALCHEMY_DATABASE_URI = os.environ['BLOG_DB_DEV_CONFIG_STRING']
     except KeyError:
-        print("No Development DB configured")
+        SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'blog.db')
 
 
 class TestingConfig(Config):
@@ -31,7 +31,7 @@ class TestingConfig(Config):
     try:
         SQLALCHEMY_DATABASE_URI = os.environ['BLOG_DB_TEST_CONFIG_STRING']
     except KeyError:
-        print("No Test DB configured")
+        pass
 
 
 class ProductionConfig(Config):
@@ -42,7 +42,7 @@ class ProductionConfig(Config):
         SQLALCHEMY_DATABASE_URI = os.environ['BLOG_DB_CONFIG_STRING']
         SECRET_KEY = bytes(os.environ['BLOG_SECRET_STRING'].encode('utf-8'))
     except KeyError as e:
-        print("No Production DB configured")
+        pass
 
 
 config_by_name = dict(dev=DevelopmentConfig,

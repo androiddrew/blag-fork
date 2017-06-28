@@ -1,9 +1,23 @@
+import os
+import subprocess
 from flask_script import Manager, prompt_bool
 from sqlalchemy.exc import SQLAlchemyError
 from blagging import app, db
 from blagging.models import Post, Author, Tag
 
 manager = Manager(app)
+
+
+# TODO: Need top change command to be just a sass build after dependency install
+@manager.command
+def build_app():
+    """Command will install all js dependencies and build scss"""
+    os.chdir('./blagging/static')
+    subprocess.call('npm install', shell=True)
+    subprocess.call('bower install', shell=True)
+    subprocess.call('npm start', shell=True)  # Need to know more about gulp
+    initdb()
+    print('sass build complete')
 
 
 @manager.command
