@@ -31,7 +31,7 @@ def create_app(config_name):
     return app
 
 
-app = create_app('dev')
+app = create_app('prod')
 
 import blagging.models
 import blagging.views
