@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 
@@ -9,6 +10,9 @@ class Config:
     DEBUG = False
     POST_PER_PAGE = 3
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    LOGGING_LOCATION = 'blag.log'
+    LOGGING_LEVEL = logging.DEBUG
 
 
 class DevelopmentConfig(Config):
